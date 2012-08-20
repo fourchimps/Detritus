@@ -6,3 +6,7 @@
 _user_bundle:
     resource: "@FourChimpsUserBundle/Resources/config/routing.yml"
     prefix:   /
+
+_article_bundle:
+    resource: "@FourChimpsArticleBundle/Resources/config/routing.yml"
+    prefix:   /

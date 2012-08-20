@@ -34,10 +34,15 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
 
             // Set up the test data from the Lipsum Service
             $article->setHeadline($lipsumGenerator->get('words', rand(2,7), false));
-            $article->setBody($lipsumGenerator->get('paragraphs', rand(1,2), rand(0,1)));
-            $article->setIntro(
-                substr($article->getBody(), 100) . '...'
-            );
+            $body = $lipsumGenerator->get('paragraphs', rand(1,2), rand(0,1));
+            $article->setBody($body);
+            if (strlen($body) > 100) {
+                $article->setIntro(
+                    substr($article->getBody(), 0, 100) . '...'
+                );
+            } else {
+                $article->setIntro($body);
+            }
 
             $article->setAuthor($this->getReference('user-user'));
 

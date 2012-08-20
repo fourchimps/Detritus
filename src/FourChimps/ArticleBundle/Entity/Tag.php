@@ -90,4 +90,37 @@ class Tag {
     {
         return $this->articles;
     }
+
+    /**
+     * Add article
+     *
+     * @param Article $articles
+     * @return Tag
+     */
+    public function addArticle(Article $article)
+    {
+        $this->articles[] = $article;
+    
+        return $this;
+    }
+
+    /**
+     * Remove article
+     *
+     * @param Article $articles
+     */
+    public function removeArticle(Article $article)
+    {
+        $this->articles->removeElement($article);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return ArrayCollection
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
 }

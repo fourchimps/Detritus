@@ -1,0 +1,6 @@
+
+ArticleBundle_article_annotation:
+    resource: "@FourChimpsArticleBundle/Controller"
+    prefix:   /
+    type:     annotation
+    

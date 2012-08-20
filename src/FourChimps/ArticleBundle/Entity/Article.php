@@ -264,4 +264,14 @@ class Article
         return $this->updated;
     }
 
+
+    /**
+     * Remove tags
+     *
+     * @param Tag $tag
+     */
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
 }
