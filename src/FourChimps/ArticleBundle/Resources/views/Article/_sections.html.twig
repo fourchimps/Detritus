@@ -1,0 +1,9 @@
+<div class="row">
+    {% for entity in entities %}
+    <article class="span3">
+        <h2>{{ entity.headline }}</h2>
+        <p>{{ entity.intro }}</p>
+        <p><a class="btn" href="{{ path('article_show', { 'id': entity.id }) }}">View details &raquo;</a></p>
+    </article><!--/span-->
+    {% endfor %}
+</div><!--/row-->

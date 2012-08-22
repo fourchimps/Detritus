@@ -1,26 +1,11 @@
 {% extends '::base.html.twig' %}
 
-{% block javascripts %}
-    {{ parent() }}
-
-    <script type="text/javascript">
-        $(function(){
-            $('#hero-carousel').carousel({
-                interval: 7000
-            });
-
-            $('#hero-carousel').carousel('cycle');
-        });
-    </script>
-{% endblock %}
-
 {% block sidebar %}
-    {% render "FourChimpsArticleBundle:TagGroup:sidebar" %}
+{% render "FourChimpsArticleBundle:TagGroup:sidebar" with { 'current' : tag.tag }%}
 {% endblock %}
 
 {% block body %}
-    {% render "FourChimpsArticleBundle:Article:partialTag" with { 'tagName' : 'layout_hero', 'templateFragment':'_hero' } %}
-
+    <h1>{{ tag.tag }}</h1>
     {% for entity in entities %}
             <section class="row">
                 <article class="span9">
@@ -31,8 +16,4 @@
                 </article><!--/span-->
             </section><!--/row-->
     {% endfor %}
-
-    <hr/>
-
-    {% render "FourChimpsArticleBundle:Article:partialTag" with { 'tagName' : 'layout_section', 'templateFragment':'_sections' } %}
 {% endblock%}

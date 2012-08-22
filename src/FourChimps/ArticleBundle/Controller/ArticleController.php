@@ -13,14 +13,14 @@ use FourChimps\ArticleBundle\Form\ArticleType;
 /**
  * Article controller.
  *
- * @Route("/article")
+ * @Route("/")
  */
 class ArticleController extends Controller
 {
     /**
      * Lists all Article entities.
      *
-     * @Route("/", name="article")
+     * @Route("", name="article")
      * @Template()
      */
     public function indexAction()
@@ -35,9 +35,56 @@ class ArticleController extends Controller
     }
 
     /**
+     * All articles that are tagged with a specific tag, using a template fragment
+     *
+     * @Route("article/{tagName}/{templateFragment}/partial_tag", name="partial_tag")
+     */
+    public function partialTagAction($tagName, $templateFragment)
+    {
+        $tag = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('FourChimpsArticleBundle:Tag')
+            ->findOneByTag($tagName);
+
+        if (!$tag) {
+            throw $this->createNotFoundException('No tag found for tag '.$tagName);
+        }
+
+        // Calculate the template name
+        $templateName = 'FourChimpsArticleBundle:Article:' . $templateFragment . '.html.twig';
+
+        return $this->render($templateName, array('entities' => $tag->getArticles()));
+    }
+
+    /**
+     * All articles that are tagged with a specific tag
+     *
+     * @Route("article/{tagName}/tag", name="article_tag")
+     * @Template()
+     */
+    public function tagAction($tagName)
+    {
+        $tag = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('FourChimpsArticleBundle:Tag')
+            ->findOneByTag($tagName);
+
+        if (!$tag) {
+            throw $this->createNotFoundException('No tag found for tag '.$tagName);
+        }
+
+        return array(
+            'entities' => $tag->getArticles(),
+            'tag' => $tag,
+        )
+            ;
+    }
+
+
+    /**
      * Finds and displays a Article entity.
      *
-     * @Route("/{id}/show", name="article_show")
+     * @Route("article/{id}/show", name="article_show")
      * @Template()
      */
     public function showAction($id)
@@ -61,7 +108,7 @@ class ArticleController extends Controller
     /**
      * Displays a form to create a new Article entity.
      *
-     * @Route("/new", name="article_new")
+     * @Route("article/new", name="article_new")
      * @Template()
      */
     public function newAction()
@@ -78,7 +125,7 @@ class ArticleController extends Controller
     /**
      * Creates a new Article entity.
      *
-     * @Route("/create", name="article_create")
+     * @Route("article/create", name="article_create")
      * @Method("POST")
      * @Template("FourChimpsArticleBundle:Article:new.html.twig")
      */
@@ -105,7 +152,7 @@ class ArticleController extends Controller
     /**
      * Displays a form to edit an existing Article entity.
      *
-     * @Route("/{id}/edit", name="article_edit")
+     * @Route("article/{id}/edit", name="article_edit")
      * @Template()
      */
     public function editAction($id)
@@ -131,7 +178,7 @@ class ArticleController extends Controller
     /**
      * Edits an existing Article entity.
      *
-     * @Route("/{id}/update", name="article_update")
+     * @Route("article/{id}/update", name="article_update")
      * @Method("POST")
      * @Template("FourChimpsArticleBundle:Article:edit.html.twig")
      */
@@ -166,7 +213,7 @@ class ArticleController extends Controller
     /**
      * Deletes a Article entity.
      *
-     * @Route("/{id}/delete", name="article_delete")
+     * @Route("article/{id}/delete", name="article_delete")
      * @Method("POST")
      */
     public function deleteAction(Request $request, $id)

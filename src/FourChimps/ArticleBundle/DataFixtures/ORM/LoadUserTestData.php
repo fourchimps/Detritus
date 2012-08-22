@@ -59,6 +59,6 @@ class LoadUserTestData extends AbstractFixture implements OrderedFixtureInterfac
     
     public function getOrder()
     {
-    	return 2; // load this fixture second
+    	return 30; // load this fixture second
     }
 }

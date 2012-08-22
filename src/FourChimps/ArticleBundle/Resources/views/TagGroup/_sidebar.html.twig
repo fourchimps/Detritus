@@ -1,0 +1,10 @@
+<div class="span3">
+    <nav class="well sidebar-nav">
+        <ul class="nav nav-list">
+            {% for entity in entities %}
+                <li class="nav-header">{{ entity.name }}</li>
+                {% render "FourChimpsArticleBundle:TagGroup:tags" with { 'id' : entity.id, 'current' : current } %}
+            {% endfor %}
+        </ul>
+    </nav><!--/.well -->
+</div><!--/span-->

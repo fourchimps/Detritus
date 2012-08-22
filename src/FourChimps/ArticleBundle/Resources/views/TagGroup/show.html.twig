@@ -1,0 +1,49 @@
+<h1>TagGroup</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>Navigable</th>
+            <td>{{ entity.navigable }}</td>
+        </tr>
+        <tr>
+            <th>Sortorder</th>
+            <td>{{ entity.sortOrder }}</td>
+        </tr>
+        <tr>
+            <th>Visible</th>
+            <td>{{ entity.visible }}</td>
+        </tr>
+        <tr>
+            <th>Active</th>
+            <td>{{ entity.active }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('taggroup') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('taggroup_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('taggroup_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

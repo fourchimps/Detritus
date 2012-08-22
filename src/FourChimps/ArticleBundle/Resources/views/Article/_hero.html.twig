@@ -1,0 +1,18 @@
+{# Partial for rendering hero-unit articles in carousel #}
+<div id="hero-carousel" class="carousel slide">
+    <!-- Carousel items -->
+    <div class="carousel-inner">
+        {% for entity in entities %}
+        <div class="{% if loop.first %}active {% endif%}item">
+            <article class="hero-unit">
+                <h1>{{ entity.headline }}</h1>
+                <p>{{ entity.intro }}</p>
+                <p><a href="{{ path('article_show', { 'id': entity.id }) }}" class="btn btn-primary btn-large">Read more &raquo;</a></p>
+            </article>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Carousel nav -->
+    <a class="carousel-control left" href="#hero-carousel" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#hero-carousel" data-slide="next">&rsaquo;</a>
+</div>

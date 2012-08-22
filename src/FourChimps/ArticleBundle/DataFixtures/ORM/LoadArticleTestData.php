@@ -36,9 +36,9 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
             $article->setHeadline($lipsumGenerator->get('words', rand(2,7), false));
             $body = $lipsumGenerator->get('paragraphs', rand(1,2), rand(0,1));
             $article->setBody($body);
-            if (strlen($body) > 100) {
+            if (strlen($body) > 254) {
                 $article->setIntro(
-                    substr($article->getBody(), 0, 100) . '...'
+                    substr($article->getBody(), 0, 254) . '...'
                 );
             } else {
                 $article->setIntro($body);
@@ -47,13 +47,23 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
             $article->setAuthor($this->getReference('user-user'));
 
             // Add some tags
-            $countTagsToAdd = rand(0,8);
+            $countTagsToAdd = rand(0,24);
             for ($j=0; $j < $countTagsToAdd; $j++ ) {
 
-                $k = rand(0, LoadTagTestData::COUNT-1);
+                $k = rand(2, LoadTagTestData::COUNT-1);
                 if ( ! $article->hasTag($this->getReference('tag-'.$k))) {
                     $article->addTag($this->getReference('tag-'.$k));
                 }
+            }
+
+            // first three articles should be tagged "layout_hero" (tag-0)
+            if ($i < 3) {
+                $article->addTag($this->getReference('tag-0'));
+            }
+
+            // first three articles should be tagged "layout_section" (tag-1)
+            if ($i >= 3 && $i < 6) {
+                $article->addTag($this->getReference('tag-1'));
             }
 
             $manager->persist($article);
@@ -65,6 +75,6 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
     
     public function getOrder()
     {
-    	return 3; // load this fixture second
+    	return 40; // load this fixture second
     }
 }

@@ -9,6 +9,31 @@
 
     {% block stylesheets %}{% endblock %}
 
+    {% stylesheets filter='less,cssrewrite'
+        '@FourChimpsThemeBundle/Resources/public/reboot/less/reboot.less'
+         '@global'
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+
+    {% javascripts
+        '@FourChimpsThemeBundle/Resources/public/reboot/js/*'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-alert.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-button.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-carousel.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-collapse.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-dropdown.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-modal.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-popover.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-scrollspy.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-tab.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-tooltip.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-transition.js'
+        '@FourChimpsThemeBundle/Resources/public/js/bootstrap-typeahead.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -34,7 +59,7 @@
             <a class="brand" href="#">FourChimps</a>
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
+                    <li {% if app.request.attributes.get('_route') == 'article' %}class="active"{% endif %}><a href="{{ path('article') }}">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -45,79 +70,11 @@
 
 <div class="container">
     <div class="row">
-        <div class="span3">
-            <nav class="well sidebar-nav">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Sidebar</li>
-                    <li class="active"><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="nav-header">Sidebar</li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="nav-header">Sidebar</li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                </ul>
-            </nav><!--/.well -->
-        </div><!--/span-->
+        {% block sidebar %}{% endblock %}
         <div class="span9">
-            <article class="hero-unit">
-                <h1>Hello, world!</h1>
-                <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-                <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-            </article>
-            <div class="row">
-                <div class="span9">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-            </div><!--/row-->
-            <div class="row">
-                <div class="span9">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-            </div><!--/row-->
-            <div class="row">
-                <div class="span9">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-            </div><!--/row-->
-
-            <hr>
-
-            <div class="row">
-                <div class="span3">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="span3">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="span3">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-            </div><!--/row-->
+            {% block body %}{% endblock %}
         </div><!--/span-->
     </div><!--/row-->
-
-    {% block body %}{% endblock %}
 
     <hr>
 
@@ -130,29 +87,3 @@
 </body>
 
 </html>
-
-{% stylesheets filter='less,cssrewrite'
-   '@global'
-   '@FourChimpsThemeBundle/Resources/public/reboot/less/reboot.less'
-%}
-<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-{% endstylesheets %}
-
-{% javascripts
-    '@FourChimpsThemeBundle/Resources/public/reboot/js/*'
-
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-alert.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-button.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-carousel.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-collapse.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-dropdown.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-modal.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-popover.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-scrollspy.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-tab.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-tooltip.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-transition.js'
-    '@FourChimpsThemeBundle/Resources/public/js/bootstrap-typeahead.js'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}

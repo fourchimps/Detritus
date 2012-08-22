@@ -19,13 +19,12 @@ class LoadTagTestData extends AbstractFixture implements OrderedFixtureInterface
 	{
 		$this->container = $container;
 	}
-	
-	
+
     public function load(ObjectManager $manager)
     {
     	$lipsumGenerator = $this->container->get('fourchimps_lipsum.lipsum');
     	
-    	$words = array();
+    	$words = array('layout_hero','layout_section');
     	
     	while(count($words) < LoadTagTestData::COUNT) {
     		$new_words = explode(
@@ -43,11 +42,30 @@ class LoadTagTestData extends AbstractFixture implements OrderedFixtureInterface
             );
     		$words = array_unique($words + $new_words);
     	}
-    	
+
+        $tagGroupPlaceholder = $this->getReference('taggroup-placeholders');
+        $tagGroupUser = $this->getReference('taggroup-user');
+        $tagGroupSection1 = $this->getReference('taggroup-section1');
+        $tagGroupSection2 = $this->getReference('taggroup-section2');
+        $tagGroupSection3 = $this->getReference('taggroup-section3');
+
     	// Tags
     	for ($i=0 ; $i<LoadTagTestData::COUNT; $i++) {
     		$tag = new Tag();
     		$tag->setTag($words[$i]);
+
+            if ($i < 2) {
+                $tag->setTagGroup($tagGroupPlaceholder);
+            } elseif ($i < 6) {
+                $tag->setTagGroup($tagGroupSection1);
+            } elseif ($i < 11) {
+                $tag->setTagGroup($tagGroupSection2);
+            } elseif ($i < 14) {
+                $tag->setTagGroup($tagGroupSection3);
+            } else {
+                $tag->setTagGroup($tagGroupUser);
+            }
+
     		$manager->persist($tag);
     		$this->addReference('tag-'.$i, $tag );
     	}
@@ -57,6 +75,6 @@ class LoadTagTestData extends AbstractFixture implements OrderedFixtureInterface
     
     public function getOrder()
     {
-    	return 1; // load this fixture second
+    	return 20; // load this fixture second
     }
 }

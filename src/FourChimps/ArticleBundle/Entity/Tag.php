@@ -3,7 +3,7 @@
 namespace FourChimps\ArticleBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
+use FourChimps\ArticleBundle\Entity\TagGroup;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +35,15 @@ class Tag {
      * @var ArrayCollection $articles
      */
     private $articles;
+
+
+    /**
+     * @var TagGroup $tagGroup
+     *
+     * @ORM\ManyToOne(targetEntity="FourChimps\ArticleBundle\Entity\TagGroup", inversedBy="tags")
+     * @ORM\JoinColumn(name="tag_group_id", referencedColumnName="id")
+     */
+    private $tagGroup;
 
     public function __construct() {
         $this->articles= new ArrayCollection();
@@ -122,5 +131,21 @@ class Tag {
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    /**
+     * @param TagGroup $tagGroup
+     */
+    public function setTagGroup($tagGroup)
+    {
+        $this->tagGroup = $tagGroup;
+    }
+
+    /**
+     * @return TagGroup
+     */
+    public function getTagGroup()
+    {
+        return $this->tagGroup;
     }
 }

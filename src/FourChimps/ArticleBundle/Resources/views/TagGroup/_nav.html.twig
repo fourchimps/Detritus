@@ -1,0 +1,3 @@
+{% for entity in entities %}
+<li {% if current == entity.tag %}class="active"{% endif %}><a href="{{ path('article_tag', { 'tagName': entity.tag }) }}">{{ entity.tag }}</a></li>
+{% endfor %}
