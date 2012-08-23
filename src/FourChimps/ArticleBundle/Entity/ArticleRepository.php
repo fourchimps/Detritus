@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
+
+    function findMostRecent($count = 5)
+    {
+        return $this
+            ->createQueryBuilder('a')
+            ->addOrderBy('a.created', 'DESC')
+            ->setMaxResults($count)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

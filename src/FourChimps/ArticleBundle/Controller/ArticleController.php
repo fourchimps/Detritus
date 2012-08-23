@@ -27,7 +27,7 @@ class ArticleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FourChimpsArticleBundle:Article')->findAll();
+        $entities = $em->getRepository('FourChimpsArticleBundle:Article')->findMostRecent(6);
 
         return array(
             'entities' => $entities,

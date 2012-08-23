@@ -1,53 +1,18 @@
-<h1>Article</h1>
+{% extends '::base.html.twig' %}
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Headline</th>
-            <td>{{ entity.headline }}</td>
-        </tr>
-        <tr>
-            <th>Body</th>
-            <td>{{ entity.body }}</td>
-        </tr>
-        <tr>
-            <th>Slug</th>
-            <td>{{ entity.slug }}</td>
-        </tr>
-        <tr>
-            <th>Intro</th>
-            <td>{{ entity.intro }}</td>
-        </tr>
-        <tr>
-            <th>Created</th>
-            <td>{{ entity.created|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th>
-            <td>{{ entity.updated|date('Y-m-d H:i:s') }}</td>
-        </tr>
-    </tbody>
-</table>
+{% block sidebar %}
+    {% render "FourChimpsArticleBundle:TagGroup:sidebar" %}
+{% endblock %}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('article') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('article_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('article_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% block body %}
+<h1>{{ entity.headline }}</h1>
+
+<p>{{ entity.body }}</p>
+
+
+<small>{{entity.author}} on {{ entity.created|date('d/m/Y') }}</small>
+
+<br/>
+Tags: {% for tag in entity.tags %}{% if tag.tagGroup.visible %}{{tag.tag}} {% endif %}{% endfor %}
+
+{% endblock %}

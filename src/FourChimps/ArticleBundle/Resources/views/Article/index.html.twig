@@ -24,10 +24,12 @@
     {% for entity in entities %}
             <section class="row">
                 <article class="span9">
+
                     <h2>{{ entity.headline }}</h2>
-                    <p>{{ entity.intro }} </p>
+                    <p>{{ entity.intro }}</p>
+                    <small>{{entity.author}} on {{ entity.created|date('d/m/Y') }}</small>
                     <p><a href="{{ path('article_show', { 'id': entity.id }) }}" class="btn" href="#">Read more &raquo;</a></p>
-                    <small>{{ entity.author }}{% if entity.created %} on {{ entity.created|date('d-m-Y') }}{% endif %}</small>
+
                 </article><!--/span-->
             </section><!--/row-->
     {% endfor %}
