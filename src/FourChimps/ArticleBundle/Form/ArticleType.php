@@ -13,12 +13,8 @@ class ArticleType extends AbstractType
         $builder
             ->add('headline')
             ->add('body')
-            ->add('slug')
             ->add('intro')
-            ->add('created')
-            ->add('updated')
             ->add('tags')
-            ->add('author')
         ;
     }
 

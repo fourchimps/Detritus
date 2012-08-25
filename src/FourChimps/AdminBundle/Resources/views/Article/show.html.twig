@@ -45,23 +45,27 @@
 </table>
 
 <div class="record_actions">
-    <a class="btn" href="{{ path('admin_article') }}">
-        <i class="icon-chevron-left"></i>
-        Back to the list
-    </a>
-    
-    <a href="{{ path('admin_article_edit', { 'id': entity.id }) }}">
-    	<i class="icon-edit"></i>
-        Edit
-    </a>
-    <form action="{{ path('admin_article_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('admin_article_delete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
+    
+        <a class="btn" href="{{ path('admin_article') }}">
+            <i class="icon-chevron-left"></i>
+            Back to the list
+        </a>
+    
+            <a class="btn" href="{{ path('admin_article_edit', { 'id': entity.id }) }}">
+            <i class="icon-edit"></i>
+            Edit
+        </a>
+    
+    
         <button class ="btn btn-danger" type="submit">
-        	<i class="icon-white icon-trash"></i>
+        	<i class="icon-white icon-remove"></i>
         	Delete
         </button>
     </form>
-</div>
+    </div>
+
 
 
 {% endblock %}

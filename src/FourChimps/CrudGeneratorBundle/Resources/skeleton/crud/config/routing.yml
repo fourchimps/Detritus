@@ -1,28 +1,28 @@
 {% if 'index' in actions %}
-{{ route_name_prefix }}:
+admin_{{ route_name_prefix }}:
     pattern:  /
     defaults: { _controller: "{{ bundle }}:{{ entity }}:index" }
 {% endif %}
 
 {% if 'show' in actions %}
-{{ route_name_prefix }}_show:
+admin_{{ route_name_prefix }}_show:
     pattern:  /{id}/show
     defaults: { _controller: "{{ bundle }}:{{ entity }}:show" }
 {% endif %}
 
 {% if 'new' in actions %}
-{{ route_name_prefix }}_new:
+admin_{{ route_name_prefix }}_new:
     pattern:  /new
     defaults: { _controller: "{{ bundle }}:{{ entity }}:new" }
 
-{{ route_name_prefix }}_create:
+admin_{{ route_name_prefix }}_create:
     pattern:  /create
     defaults: { _controller: "{{ bundle }}:{{ entity }}:create" }
     requirements: { _method: post }
 {% endif %}
 
 {% if 'edit' in actions %}
-{{ route_name_prefix }}_edit:
+admin_{{ route_name_prefix }}_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "{{ bundle }}:{{ entity }}:edit" }
 
@@ -33,7 +33,7 @@
 {% endif %}
 
 {% if 'delete' in actions %}
-{{ route_name_prefix }}_delete:
+admin_{{ route_name_prefix }}_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "{{ bundle }}:{{ entity }}:delete" }
     requirements: { _method: post }
