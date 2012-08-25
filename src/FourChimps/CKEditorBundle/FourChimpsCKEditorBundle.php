@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class FourChimpsCKEditorBundle extends Bundle
 {
-    public static $defaultToolbar = array(
+    public static $fullEditToolbar = array(
         array(
             'name' => 'document',
             'items' => array('Source','-','NewPage')
@@ -41,4 +41,25 @@ class FourChimpsCKEditorBundle extends Bundle
             'items' => array('Image','Table','BA-II','HorizontalRule','SpecialChar','PageBreak')
         ),
     );
+
+    public static $defaultToolbar = array(
+        array(
+            'name' => 'styles',
+            'items' => array('Format')
+        ),
+        array(
+            'name' => 'basicstyles',
+            'items' => array('Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat')
+        ),
+        '/',
+        array(
+            'name' => 'paragraph',
+            'items' => array('NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock')
+        ),
+        array(
+            'name' => 'insert',
+            'items' => array('Image','Table','HorizontalRule','SpecialChar','PageBreak')
+        ),
+    );
+
 }
