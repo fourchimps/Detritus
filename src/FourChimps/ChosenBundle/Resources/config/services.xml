@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    
+    <parameters>
+        <parameter key="form.type.chosen.class">SevenCity\ChosenBundle\Form\Type\ChosenType</parameter>
+    </parameters>
+    
+    <services>
+        
+        <service id="form.type.chosen" class="%form.type.chosen.class%">
+            <tag name="form.type" alias="chosen" />
+        </service>
+        
+    </services>
+    
+</container>

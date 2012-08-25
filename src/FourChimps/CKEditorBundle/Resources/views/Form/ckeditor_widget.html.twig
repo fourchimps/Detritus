@@ -1,0 +1,35 @@
+{% form_theme form _self %}
+
+{% block ckeditor_widget %}
+{% spaceless %}
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+   
+    <script type="text/javascript" src="{{ asset('bundles/fourchimpsckeditor/lib/ck/ckeditor.js') }}"></script>
+    <script type="text/javascript">
+        CKEDITOR.replace("{{ id }}",{
+            toolbar: {{ toolbar | json_encode | raw }},
+            {% if ui_color is not null %}
+                uiColor: {{ ui_color }},
+            {% endif %}
+            {% if skin is not null %}
+                skin: '{{ skin }}',
+            {% endif %}
+            {% if extraPlugins is not null %}
+            	extraPlugins: '{{ extraPlugins }}',
+            {% endif %}
+            {% if removePlugins is not null %}
+            	removePlugins: '{{ removePlugins }}',
+            {% endif %}
+            {% if height is not null %}
+             	height: {{ height }},
+            {% endif %}
+            {% if autoGrow_minHeight is not null %}
+             	autoGrow_minHeight: {{ autoGrow_minHeight }},
+            {% endif %}
+            {% if resize_maxWidth is not null %}
+            	resize_maxWidth: '{{ resize_maxWidth }}',
+            {% endif %}
+        });
+    </script>
+{% endspaceless %}
+{% endblock %}

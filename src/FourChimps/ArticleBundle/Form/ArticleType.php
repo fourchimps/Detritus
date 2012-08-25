@@ -5,6 +5,7 @@ namespace FourChimps\ArticleBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use FourChimps\CKEditorBundle\FourChimpsCKEditorBundle;
 
 class ArticleType extends AbstractType
 {
@@ -12,7 +13,15 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('headline')
-            ->add('body')
+            ->add('body', 'ckeditor', array(
+                'toolbar' => FourChimpsCKEditorBundle::$defaultToolbar,
+                'skin' => 'BootstrapCK-Skin',
+                'resize_maxWidth' => '%',
+                'extraPlugins' => 'baii,autogrow',
+                'height' => 100,
+                'autoGrow_minHeight' => 100,
+                'removePlugins' => 'elementspath,resize',
+            ))
             ->add('intro')
             ->add('tags')
         ;

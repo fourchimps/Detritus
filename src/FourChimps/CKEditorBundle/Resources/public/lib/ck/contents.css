@@ -1,0 +1,49 @@
+/*
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+body
+{
+	/* Font */
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 13px;
+    line-height: 18px;
+
+	/* Text color */
+	color: #757C82;
+
+	/* Remove the background color to make it transparent */
+	background-color: #fff;
+}
+
+span.calculator-button {
+	border: 1px solid #777;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 3px;
+	padding: 3px;
+	margin-right: 3px;
+	font-weight: bolder;
+	font-size: 15px;
+}
+
+span.calculator-button-shift {
+	border: 1px dashed #777;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 3px;
+	padding: 3px;
+	margin-right: 3px;
+	font-weight: bolder;
+	font-size: 15px;
+}
+
+
+ol,ul,dl
+{
+	/* IE7: reset rtl list margin. (#7334) */
+	*margin-right:0px;
+	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
+    padding:0 40px;
+}

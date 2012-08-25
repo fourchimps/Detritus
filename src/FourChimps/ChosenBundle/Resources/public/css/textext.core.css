@@ -1,0 +1,37 @@
+.text-core {
+  position: relative;
+}
+.text-core .text-wrap {
+  background: #fff;
+  position: absolute;
+  width:220px;
+}
+.text-core .text-wrap textarea,
+.text-core .text-wrap input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+/*  border: 1px solid #9daccc; */
+  color: #555555;
+  border: 1px solid #ccc;
+  
+  outline: none;
+  resize: none;
+  position: absolute;
+  z-index: 1;
+  background: none;
+  overflow: hidden;
+  margin: 0;
+  padding: 3px 5px 4px 5px;
+  white-space: nowrap;
+ /* font: 11px "lucida grande", tahoma, verdana, arial, sans-serif;
+  line-height: 13px; */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+ 
+  height: auto;
+}

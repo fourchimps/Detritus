@@ -1,0 +1,31 @@
+{% form_theme form _self %}
+
+{% block chosen_widget %}
+{% spaceless %}
+	<textarea {{ block('widget_attributes') }} style="width:100%" rows="1"></textarea>
+       
+	<script type="text/javascript">
+	    $('#{{ id }}').textext({
+	        {% if plugins is not null %}
+	        	plugins: '{{ plugins }}',
+        	{% endif %}
+
+		     tagsItems : {{ value | raw }},
+
+	        {% if prompt is not null %}
+                prompt: '{{ prompt }}',
+            {% else %}
+                prompt: 'Add item...',
+            {% endif %}
+
+            {% if ajax is not null %}
+	        	ajax : {{ ajax | json_encode | raw}},
+            {%  endif %}
+            
+	    });
+	</script>    
+{% endspaceless %}
+{% endblock %}
+
+
+
