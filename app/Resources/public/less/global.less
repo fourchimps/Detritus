@@ -1,4 +1,6 @@
-/* Global styles */
+/* Global styles - variables isnt imported here so redeclare anything boostrappy that you need */
+
+@grayLighter:           #BBBFC2;
 
 
 body {
@@ -12,4 +14,14 @@ body {
 
 small {
     font-size: smaller;
+}
+
+.navbar .nav > li.text {
+    padding: 9px 10px 11px;
+    line-height: 19px;
+    color: @grayLighter;
+}
+
+form-actions {
+    background-color: red;
 }

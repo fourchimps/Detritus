@@ -1,0 +1,43 @@
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    
+        
+    {% form_theme edit_form 'FourChimpsThemeBundle:Form:theme.html.twig' %}
+    
+        
+
+    {% block sidebar %}
+    <h1>Sidebar</h1>
+    {% endblock %}
+-
+<h1>Article Edit</h1>
+
+<form class="well form-horizontal" action="{{ path('admin_article_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button class="btn btn-success" type="submit">
+        	<i class="icon-white icon-check"></i>
+        	Edit
+        </button>
+    </p>
+</form>
+
+<div class="record_actions">
+    <a class="btn" href="{{ path('admin_article') }}">
+        <i class="icon-chevron-left"></i>
+        Back to the list
+    </a>
+    
+    <form action="{{ path('admin_article_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button class ="btn btn-danger" type="submit">
+        	<i class="icon-white icon-trash"></i>
+        	Delete
+        </button>
+    </form>
+</div>
+
+
+{% endblock %}

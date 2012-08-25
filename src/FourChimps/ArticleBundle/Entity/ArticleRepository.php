@@ -12,7 +12,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-
     function findMostRecent($count = 5)
     {
         return $this
@@ -22,5 +21,4 @@ class ArticleRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
-
 }

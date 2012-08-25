@@ -25,6 +25,8 @@ class LoadUserTestData extends AbstractFixture implements OrderedFixtureInterfac
 
         $superAdminUser = new User();
         $superAdminUser->setUsername('super');
+        $superAdminUser->setFirstName('Senna');
+        $superAdminUser->setLastName('Tenna-Hennasson');
         $superAdminUser->setEmail('super@fourchimps.com');
         $superAdminUser->setPlainPassword('super');
         $superAdminUser->addRole('ROLE_SUPER_ADMIN');
@@ -33,6 +35,8 @@ class LoadUserTestData extends AbstractFixture implements OrderedFixtureInterfac
 
         $adminUser = new User();
         $adminUser->setUsername('admin');
+        $adminUser->setFirstName('Arty');
+        $adminUser->setLastName('Admin');
         $adminUser->setEmail('admin@fourchimps.com');
         $adminUser->setPlainPassword('admin');
         $adminUser->addRole('ROLE_ADMIN');
@@ -49,10 +53,21 @@ class LoadUserTestData extends AbstractFixture implements OrderedFixtureInterfac
         $user->setEnabled(TRUE);
         $manager->persist($user);
 
+        $user2 = new User();
+        $user2->setUsername('admin2');
+        $user2->setFirstName('Gunther');
+        $user2->setLastName('McChunker');
+        $user2->setEmail('gunther@fourchimps.com');
+        $user2->setPlainPassword('admin2');
+        $user2->addRole('ROLE_ADMIN');
+        $user2->setEnabled(TRUE);
+        $manager->persist($user2);
+
         // store references so we can build other fixtures
         $this->addReference('user-super', $superAdminUser );
         $this->addReference('user-admin', $adminUser );
-        $this->addReference('user-user',  $user );
+        $this->addReference('user-user', $user );
+        $this->addReference('user-admin2', $user2 );
 
         $manager->flush();
     }

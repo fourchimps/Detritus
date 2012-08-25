@@ -1,22 +1,39 @@
-<h1>Article edit</h1>
+{% extends '::base.html.twig' %}
+{% form_theme edit_form 'FourChimpsThemeBundle:Form:theme.html.twig' %}
 
-<form action="{{ path('article_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+{% block sidebar %}
+{% render "FourChimpsArticleBundle:TagGroup:sidebar" %}
+{% endblock %}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('article') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
+{% block body %}
+    <h2>Article Edit</h2>
+
+    <form class="well form-horizontal" action="{{ path('article_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_widget(edit_form) }}
+
+        <div class="form-actions">
+            <button class="btn btn-success" type="submit">
+                <i class="icon-white icon-check"></i>
+                Save
+            </button>
+        </div>
+    </form>
+
+
+    <div class="record_actions">
         <form action="{{ path('article_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <a class="btn " href="{{ path('article_show', { 'id': entity.id }) }}">
+                &laquo; Cancel
+            </a>
+
+            <button class="btn btn-danger" type="submit">
+                <i class="icon-white icon-remove"></i>
+                Delete
+            </button>
         </form>
-    </li>
-</ul>
+
+    </div>
+
+{% endblock %}
+

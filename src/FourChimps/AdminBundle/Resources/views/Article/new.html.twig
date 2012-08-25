@@ -1,0 +1,36 @@
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    
+        
+    {% form_theme form 'FourChimpsThemeBundle:Form:theme.html.twig' %}
+    
+        
+
+    {% block sidebar %}
+    <h1>Sidebar</h1>
+    {% endblock %}
+-
+<h1>Article creation</h1>
+
+<form action="{{ path('admin_article_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button class="btn btn-success" type="submit">
+        	<i class="icon-white icon-plus-sign"></i>
+        	Create
+        </button>
+    </p>
+</form>
+
+<div class="record_actions">
+    <a class="btn" href="{{ path('admin_article') }}">
+        <i class="icon-chevron-left"></i>
+        Back to the list
+    </a>
+    
+</div>
+
+
+{% endblock %}

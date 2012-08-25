@@ -1,0 +1,67 @@
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    
+        
+
+    {% block sidebar %}
+    <h1>Sidebar</h1>
+    {% endblock %}
+-
+<h1>Article</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th> {{ ' id '|uncamelcase }}</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' headline '|uncamelcase }}</th>
+            <td>{{ entity.headline }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' body '|uncamelcase }}</th>
+            <td>{{ entity.body }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' slug '|uncamelcase }}</th>
+            <td>{{ entity.slug }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' intro '|uncamelcase }}</th>
+            <td>{{ entity.intro }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' created '|uncamelcase }}</th>
+            <td>{{ entity.created|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' updated '|uncamelcase }}</th>
+            <td>{{ entity.updated|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="record_actions">
+    <a class="btn" href="{{ path('admin_article') }}">
+        <i class="icon-chevron-left"></i>
+        Back to the list
+    </a>
+    
+    <a href="{{ path('admin_article_edit', { 'id': entity.id }) }}">
+    	<i class="icon-edit"></i>
+        Edit
+    </a>
+    <form action="{{ path('admin_article_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button class ="btn btn-danger" type="submit">
+        	<i class="icon-white icon-trash"></i>
+        	Delete
+        </button>
+    </form>
+</div>
+
+
+{% endblock %}

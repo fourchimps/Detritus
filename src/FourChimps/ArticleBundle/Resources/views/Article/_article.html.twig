@@ -1,0 +1,10 @@
+<article class="{{ article_class }}">
+    <{{ headline_tag }}>{{ entity.headline }}</{{ headline_tag }}>
+    <p>{{ entity.intro }}</p>
+    {% if show_author %}
+        <small>{{entity.author}} on {{ entity.created|date('d/m/Y') }}</small>
+    {% endif %}
+    <p>
+        <a href="{{ path('article_show', { 'id': entity.id }) }}" class="btn {{ button_class }}">Read more &raquo;</a>
+    </p>
+</article>

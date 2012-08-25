@@ -5,14 +5,22 @@
 {% endblock %}
 
 {% block body %}
-<h1>{{ entity.headline }}</h1>
+    <h1>{{ entity.headline }}</h1>
 
-<p>{{ entity.body }}</p>
+    <p>{{ entity.body }}</p>
 
 
-<small>{{entity.author}} on {{ entity.created|date('d/m/Y') }}</small>
+    <small>{{entity.author}} on {{ entity.created|date('d/m/Y') }}</small>
 
-<br/>
-Tags: {% for tag in entity.tags %}{% if tag.tagGroup.visible %}{{tag.tag}} {% endif %}{% endfor %}
+    <br/>
+    Tags: {% for tag in entity.tags %}{% if tag.tagGroup.visible %}{{tag.tag}} {% endif %}{% endfor %}
+
+
+    {% if (is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN') and app.user == entity.author)) %}
+
+    <a href="{{ path('article_edit', { 'id': entity.id }) }}" class="btn btn-info">Edit <span class="caret"></span></a>
+
+    {% endif%}
+
 
 {% endblock %}

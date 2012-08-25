@@ -11,7 +11,7 @@
 
     {% stylesheets filter='less,cssrewrite'
         '@FourChimpsThemeBundle/Resources/public/reboot/less/reboot.less'
-         '@global'
+        '@global'
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
@@ -63,10 +63,21 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <ul class="nav pull-right">
+                    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <li><a href="{{ path('fos_user_registration_register') }}">Sign Up</a></li>
+                        <li><a href="{{ path('fos_user_security_login') }}" ><i class="icon-user icon-white"></i> Sign In</a></li>
+                    {% else %}
+                        <li class="text">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</li>
+                        <li><a href="{{ path('fos_user_profile_edit') }}">Profile</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">Log Out</a></li>
+                    {% endif %}
+                </ul>
             </div><!--/.nav-collapse -->
         </div>
     </div>
 </div>
+
 
 <div class="container">
     <div class="row">

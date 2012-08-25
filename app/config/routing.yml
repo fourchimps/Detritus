@@ -10,3 +10,7 @@ _user_bundle:
 _article_bundle:
     resource: "@FourChimpsArticleBundle/Resources/config/routing.yml"
     prefix:   /
+
+_admin_bundle:
+    resource: "@FourChimpsAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin

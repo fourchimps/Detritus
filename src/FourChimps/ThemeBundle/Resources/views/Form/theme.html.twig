@@ -1,0 +1,56 @@
+{#
+
+compatible with symfony 2.1 theme naming changes (see the bottom of
+/var/www/fourchimps.com/detritus/vendor/symfony/symfony/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+for deprecated classes
+
+#}
+
+{% block form_rows %}
+{% spaceless %}
+    {% for child in form %}
+        {{ form_row(child) }}
+    {% endfor %}
+{% endspaceless %}
+{% endblock form_rows %}
+
+
+{% block form_row %}
+{% spaceless %}
+    {% if macro is not defined %}
+        {% import 'FourChimpsThemeBundle:Form:macro.html.twig' as macro %}
+    {% endif %}
+    <div class="control-group {{macro.hasErrors(form)}}">
+        {{ form_label(form) }}
+        <div class="controls">
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+        <span class="help-inline error" style="float:right;width:170px;margin-top:5px;">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+
+{% block form_label %}
+{% spaceless %}
+    {% set label_attr = label_attr|merge({'class': attr.class|default('') ~ ' control-label form'}) %}
+    {% if not compound %}
+        {% set label_attr = label_attr|merge({'for': id}) %}
+    {% endif %}
+    {% if required %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+    {% endif %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+{% endspaceless %}
+{% endblock form_label %}

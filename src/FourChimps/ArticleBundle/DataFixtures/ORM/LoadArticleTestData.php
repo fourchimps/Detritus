@@ -44,7 +44,13 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
                 $article->setIntro($body);
             }
 
-            $article->setAuthor($this->getReference('user-user'));
+            if ($i % 2 == 0) {
+                $article->setAuthor($this->getReference('user-user'));
+            } else {
+                $article->setAuthor($this->getReference('user-admin2'));
+            }
+
+
 
             // Add some tags
             $countTagsToAdd = rand(0,24);

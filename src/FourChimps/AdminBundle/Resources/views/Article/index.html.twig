@@ -1,0 +1,49 @@
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    
+        
+
+    {% block sidebar %}
+    <h1>Sidebar</h1>
+    {% endblock %}
+-
+<h1>Article list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th> {{ ' id '|uncamelcase }}</th>
+            <th> {{ ' headline '|uncamelcase }}</th>
+            <th> {{ ' body '|uncamelcase }}</th>
+            <th> {{ ' slug '|uncamelcase }}</th>
+            <th> {{ ' intro '|uncamelcase }}</th>
+            <th> {{ ' created '|uncamelcase }}</th>
+            <th> {{ ' updated '|uncamelcase }}</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('admin_article_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.headline }}</td>
+            <td>{{ entity.body }}</td>
+            <td>{{ entity.slug }}</td>
+            <td>{{ entity.intro }}</td>
+            <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>                        <a class="btn" href="{{ path('admin_article_show', { 'id': entity.id }) }}">show</a>                        <a class="btn" href="{{ path('admin_article_edit', { 'id': entity.id }) }}">edit</a>            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+	<a class = "btn btn-primary" href="{{ path('admin_article_new') }}">
+		<i class="icon-white icon-plus-sign"></i>
+    	Create a new entry
+	</a>
+
+
+{% endblock %}

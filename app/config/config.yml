@@ -1,10 +1,11 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: @FourChimpsTwigExtensionBundle/Resources/config/services.yml }
 
 framework:
     #esi:             ~
-    translator:      ~
+    translator:      { fallback: en }
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -77,3 +78,4 @@ stof_doctrine_extensions:
         default:
             sluggable: true
             timestampable: true
+
