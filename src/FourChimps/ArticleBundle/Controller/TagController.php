@@ -207,8 +207,9 @@ class TagController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $term = $this->getRequest()->query->get('term');
+        $minimumLength = $this->getRequest()->query->get('minimumLength');
 
-        $tags = $em->getRepository('FourChimpsArticleBundle:Tag')->getFilteredVisibleTags($term);
+        $tags = $em->getRepository('FourChimpsArticleBundle:Tag')->getFilteredVisibleTags($term, $minimumLength);
 
         $output = array();
         foreach ($tags as $tag) {

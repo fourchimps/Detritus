@@ -14,7 +14,7 @@ class ArticleType extends AbstractType
 
     public function __construct($tagDataURI)
     {
-        $this->tagDataURI = $tagDataURI;
+        $this->tagDataURI = $tagDataURI . '?minimumLength=3';
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -38,6 +38,7 @@ class ArticleType extends AbstractType
                 'maxTags' => 10,
                 'sortable' => true,
                 'minimumLength' => 3,
+                'allowNewTags' => false,
             ))
         ;
     }

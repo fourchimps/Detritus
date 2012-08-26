@@ -166,7 +166,9 @@ class ArticleController extends Controller
 
         $editForm = $this->createForm(
             new ArticleType(
-                $this->container->get('router')->generate('tag_data')
+                $this->container->get('router')->generate(
+                    'tag_data'
+                )
             ),
             $entity
         );
@@ -199,7 +201,9 @@ class ArticleController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(
             new ArticleType(
-                $this->container->get('router')->generate('tag_data')
+                $this->container->get('router')->generate(
+                    'tag_data'
+                )
             ),
             $entity
         );
