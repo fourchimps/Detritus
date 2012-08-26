@@ -6,9 +6,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FourChimps\CKEditorBundle\FourChimpsCKEditorBundle;
+//use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ArticleType extends AbstractType
 {
+    private $tagDataURI;
+
+    public function __construct($tagDataURI)
+    {
+        $this->tagDataURI = $tagDataURI;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -23,7 +31,14 @@ class ArticleType extends AbstractType
                 'removePlugins' => 'elementspath,resize',
             ))
             ->add('intro')
-            ->add('tags')
+            ->add('tagsAsJson', 'tag_edit', array(
+                'label' => 'Tags',
+                'tagSource' => $this->tagDataURI,
+                'highlightOnExistColor' => '#BD362F',
+                'maxTags' => 10,
+                'sortable' => true,
+                'minimumLength' => 3,
+            ))
         ;
     }
 
@@ -38,4 +53,5 @@ class ArticleType extends AbstractType
     {
         return 'fourchimps_articlebundle_articletype';
     }
+
 }

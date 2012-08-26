@@ -1,15 +1,14 @@
 <?php
 
-namespace FourChimps\CKEditorBundle\DependencyInjection;
+namespace FourChimps\TagEditBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * FourChimps CKEditor configuration
+ * FourChimps TagEdit configuration
  *
  * @author Shaun Masterman < shaun@masterman.com >
- * Based on IvoryCKEditor by GeLo <geloen.eric@gmail.com>
  */
 class Configuration implements ConfigurationInterface
 {
@@ -19,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('fourchimps_ckeditor');
+        $rootNode = $treeBuilder->root('fourchimps_tag_edit');
 
         return $treeBuilder;
     }

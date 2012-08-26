@@ -80,7 +80,6 @@ class ArticleController extends Controller
             ;
     }
 
-
     /**
      * Finds and displays a Article entity.
      *
@@ -165,7 +164,12 @@ class ArticleController extends Controller
             throw $this->createNotFoundException('Unable to find Article entity.');
         }
 
-        $editForm = $this->createForm(new ArticleType(), $entity);
+        $editForm = $this->createForm(
+            new ArticleType(
+                $this->container->get('router')->generate('tag_data')
+            ),
+            $entity
+        );
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -193,7 +197,12 @@ class ArticleController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ArticleType(), $entity);
+        $editForm = $this->createForm(
+            new ArticleType(
+                $this->container->get('router')->generate('tag_data')
+            ),
+            $entity
+        );
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

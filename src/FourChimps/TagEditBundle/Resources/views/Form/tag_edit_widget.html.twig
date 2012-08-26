@@ -1,0 +1,58 @@
+{% form_theme form _self %}
+
+{% block tag_edit_widget %}
+{% spaceless %}
+    {# dont render the elements here - use initialTags #}
+	<ul id="{{ id }}"></ul>
+
+<!--    <input type="text" id="fourchimps_articlebundle_articletype_tagsasjson"
+           name="fourchimps_articlebundle_articletype[tagsasjson]" maxlength="255" value="xyz"> -->
+
+	<script type="text/javascript">
+        $(function(){
+            $('#{{ id }}').tagfield({
+                select : false,
+                inputBridge : '{{ block('widget_attributes') }}',
+                {% if tagSource is not null %}
+                    tagSource: '{{ tagSource }}',
+                {% endif -%}
+
+                {%- if triggerKeys is not null %}
+                    triggerKeys: '{{ triggerKeys }}',
+                {% endif -%}
+
+                {%- if value is not null %}
+                    initialTags: {{ value|raw }},
+                {% endif -%}
+
+                {%- if sortable is not null %}
+                    sortable: '{{ sortable }}',
+                {% endif -%}
+
+                {%- if minimumLength is not null %}
+                    minimumLength: '{{ minimumLength }}',
+                {% endif -%}
+
+                {%- if maxTags is not null %}
+                    maxTags: '{{ maxTags }}',
+                {% endif -%}
+
+                {%- if allowNewTags is not null %}
+                    allowNewTags: '{{ allowNewTags }}',
+                {% endif -%}
+
+                {%- if caseSensitive is not null %}
+                    caseSensitive: '{{ caseSensitive }}',
+                {% endif -%}
+
+                {%- if highlightOnExistColor is not null %}
+                    highlightOnExistColor: '{{ highlightOnExistColor }}',
+                {% endif -%}
+            })
+        });
+	</script>    
+{% endspaceless %}
+{% endblock %}
+
+
+

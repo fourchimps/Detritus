@@ -1,6 +1,17 @@
 {% extends '::base.html.twig' %}
 {% form_theme edit_form 'FourChimpsThemeBundle:Form:theme.html.twig' %}
 
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('bundles/fourchimpstagedit/css/ui.tagfield.css') }}" rel="stylesheet" media="screen" />
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset( 'bundles/fourchimpstagedit/js/jquery.ui.tagfield.js' ) }}"></script>
+{% endblock %}
+
+
 {% block sidebar %}
 {% render "FourChimpsArticleBundle:TagGroup:sidebar" %}
 {% endblock %}

@@ -1,6 +1,0 @@
-.buildpath
-.externalToolBuilders/*
-.project
-.settings/*
-
-Tests/vendor/*

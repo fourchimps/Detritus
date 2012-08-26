@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FourChimps\ArticleBundle\Entity\Tag;
 use FourChimps\ArticleBundle\Form\TagType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Tag controller.
@@ -196,4 +197,25 @@ class TagController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Driver for jQuery Tags Editor
+     *
+     * @Route("/tag_data", name="tag_data")
+     */
+    public function tagDataAction() {
+        $em = $this->getDoctrine()->getManager();
+
+        $term = $this->getRequest()->query->get('term');
+
+        $tags = $em->getRepository('FourChimpsArticleBundle:Tag')->getFilteredVisibleTags($term);
+
+        $output = array();
+        foreach ($tags as $tag) {
+            $output[] = $tag->__toString();
+        }
+
+        return  new Response(json_encode($output));
+    }
+
 }

@@ -35,6 +35,7 @@ class AppKernel extends Kernel
             new FourChimps\CrudGeneratorBundle\FourChimpsCrudGeneratorBundle(),
             new FourChimps\TwigExtensionBundle\FourChimpsTwigExtensionBundle(),
             new FourChimps\CKEditorBundle\FourChimpsCKEditorBundle(),
+            new FourChimps\TagEditBundle\FourChimpsTagEditBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

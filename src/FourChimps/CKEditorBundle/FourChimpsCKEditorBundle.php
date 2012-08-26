@@ -6,7 +6,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * FourChimps CKEditor bundle
- * 
+ *
+ * @author Shaun Masterman < shaun@masterman.com >
  */
 class FourChimpsCKEditorBundle extends Bundle
 {

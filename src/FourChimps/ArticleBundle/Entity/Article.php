@@ -274,4 +274,20 @@ class Article
     {
         $this->tags->removeElement($tag);
     }
+
+    /**
+     * @return string
+     */
+    public function getTagsAsJson() {
+        $arOut = array();
+        foreach ($this->getTags() as $tag) {
+            $arOut[] = $tag->__toString();
+        }
+        return json_encode($arOut);
+    }
+
+    public function setTagsAsJson($tagString) {
+
+    }
+
 }

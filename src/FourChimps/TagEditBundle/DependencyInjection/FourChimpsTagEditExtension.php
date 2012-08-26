@@ -1,6 +1,6 @@
 <?php
 
-namespace FourChimps\CKEditorBundle\DependencyInjection;
+namespace FourChimps\TagEditBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -9,11 +9,11 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
 
 /**
- * FourChimps CKEditor extension
+ * FourChimps TagEdit extension
  *
  * @author Shaun Masterman < shaun@masterman.com >
  */
-class FourChimpsCKEditorExtension extends Extension
+class FourChimpsTagEditExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -27,7 +27,7 @@ class FourChimpsCKEditorExtension extends Extension
         
         $container->setParameter('twig.form.resources', array_merge(
             $container->getParameter('twig.form.resources'),
-            array('FourChimpsCKEditorBundle:Form:ckeditor_widget.html.twig')
+            array('FourChimpsTagEditBundle:Form:tag_edit_widget.html.twig')
         ));
         
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

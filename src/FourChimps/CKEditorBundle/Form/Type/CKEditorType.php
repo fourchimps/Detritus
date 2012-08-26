@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormInterface;
 /**
  * CKEditor type
  *
+ * @author Shaun Masterman < shaun@masterman.com >
  */
 class CKEditorType extends AbstractType
 {

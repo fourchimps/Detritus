@@ -7,14 +7,14 @@
     <meta name="description" content="{% block description %}{% endblock %}">
     <meta name="author" content="Shaun Masterman <shaun@masterman.com>">
 
-    {% block stylesheets %}{% endblock %}
-
     {% stylesheets filter='less,cssrewrite'
         '@FourChimpsThemeBundle/Resources/public/reboot/less/reboot.less'
         '@global'
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
+
+    {% block stylesheets %}{% endblock %}
 
     {% javascripts
         '@FourChimpsThemeBundle/Resources/public/reboot/js/*'

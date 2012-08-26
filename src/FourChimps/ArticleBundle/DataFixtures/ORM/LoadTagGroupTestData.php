@@ -11,9 +11,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadTagGroupTestData extends AbstractFixture implements OrderedFixtureInterface
 {
-
-	
-
     public function load(ObjectManager $manager)
     {
     	// TagGroups
