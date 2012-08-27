@@ -27,7 +27,7 @@ class ArticleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FourChimpsArticleBundle:Article')->findMostRecent(6);
+        $entities = $em->getRepository('FourChimpsArticleBundle:Article')->findPublishedMostRecent(6);
 
         return array(
             'entities' => $entities,
@@ -55,6 +55,43 @@ class ArticleController extends Controller
 
         return $this->render($templateName, array('entities' => $tag->getArticles()));
     }
+
+    /**
+     * All articles that are marked a Hero
+     *
+     * @Route("article/hero", name="_hero")
+     * @Template()
+     */
+    public function _heroAction()
+    {
+        $entities = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('FourChimpsArticleBundle:Article')
+            ->findPublishedHero();
+
+        return array(
+            'entities' => $entities,
+        );
+    }
+
+    /**
+     * All articles that are marked a Section
+     *
+     * @Route("article/sections", name="_sections")
+     * @Template()
+     */
+    public function _sectionsAction()
+    {
+        $entities = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('FourChimpsArticleBundle:Article')
+            ->findPublishedSections();
+
+        return array(
+            'entities' => $entities,
+        );
+    }
+
 
     /**
      * All articles that are tagged with a specific tag
@@ -191,8 +228,8 @@ class ArticleController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('FourChimpsArticleBundle:Article')->find($id);
+        $entityRepository = $em->getRepository('FourChimpsArticleBundle:Article');
+        $entity = $entityRepository->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Article entity.');
@@ -207,10 +244,14 @@ class ArticleController extends Controller
             ),
             $entity
         );
+
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
+
+            $entityRepository->persistTagsFromJSONBuffer($entity);
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('article_edit', array('id' => $id)));

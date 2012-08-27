@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FourChimps\CKEditorBundle\FourChimpsCKEditorBundle;
-//use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\ResolvedFormTypeInterface;
 
 class ArticleType extends AbstractType
 {
@@ -38,7 +38,7 @@ class ArticleType extends AbstractType
                 'maxTags' => 10,
                 'sortable' => true,
                 'minimumLength' => 3,
-                'allowNewTags' => false,
+                'allowNewTags' => true,
             ))
         ;
     }

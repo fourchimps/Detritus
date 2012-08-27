@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block body %}
-    {% render "FourChimpsArticleBundle:Article:partialTag" with { 'tagName' : 'layout_hero', 'templateFragment':'_hero' } %}
+    {% render "FourChimpsArticleBundle:Article:_hero" %}
 
     {% for entity in entities %}
         <section class="row">
@@ -35,5 +35,5 @@
 
     <hr/>
 
-    {% render "FourChimpsArticleBundle:Article:partialTag" with { 'tagName' : 'layout_section', 'templateFragment':'_sections' } %}
+    {% render "FourChimpsArticleBundle:Article:_sections" %}
 {% endblock%}

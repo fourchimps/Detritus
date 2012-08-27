@@ -45,6 +45,13 @@ class Tag {
      */
     private $tagGroup;
 
+    /**
+     * @var boolean $navigable
+     *
+     * @ORM\Column(name="navigable", type="boolean")
+     */
+    private $navigable;
+
     public function __construct() {
         $this->articles= new ArrayCollection();
     }
@@ -103,7 +110,7 @@ class Tag {
     /**
      * Add article
      *
-     * @param Article $articles
+     * @param Article $article
      * @return Tag
      */
     public function addArticle(Article $article)
@@ -116,7 +123,7 @@ class Tag {
     /**
      * Remove article
      *
-     * @param Article $articles
+     * @param Article $article
      */
     public function removeArticle(Article $article)
     {
@@ -147,5 +154,21 @@ class Tag {
     public function getTagGroup()
     {
         return $this->tagGroup;
+    }
+
+    /**
+     * @param boolean $navigable
+     */
+    public function setNavigable($navigable)
+    {
+        $this->navigable = $navigable;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isNavigable()
+    {
+        return $this->navigable;
     }
 }

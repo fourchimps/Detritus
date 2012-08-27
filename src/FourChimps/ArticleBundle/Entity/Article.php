@@ -89,8 +89,36 @@ class Article
      */
     private $updated;
 
+    /**
+     * @var boolean $published
+     *
+     * @ORM\Column(name="published", type="boolean")
+     */
+    private $published;
 
-    public function __construct() {
+
+    /**
+     * @var boolean $hero
+     *
+     * @ORM\Column(name="hero", type="boolean")
+     */
+    private $hero;
+
+    /**
+     * @var boolean $section
+     *
+     * @ORM\Column(name="section", type="boolean")
+     */
+    private $section;
+
+
+    /**
+     * Not ORM Mapped - not a real field. After setting this in a form do stuff to persist the actual tag changes
+     */
+    private $tagsAsJsonBuffer;
+
+    public function __construct()
+    {
         // initialise any collections
         $this->tags = new ArrayCollection();
     }
@@ -264,7 +292,6 @@ class Article
         return $this->updated;
     }
 
-
     /**
      * Remove tags
      *
@@ -276,9 +303,42 @@ class Article
     }
 
     /**
+     * @param boolean $hero
+     */
+    public function setHero($hero)
+    {
+        $this->hero = $hero;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isHero()
+    {
+        return $this->hero;
+    }
+
+    /**
+     * @param boolean $section
+     */
+    public function setSection($section)
+    {
+        $this->section = $section;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSection()
+    {
+        return $this->section;
+    }
+
+    /**
      * @return string
      */
-    public function getTagsAsJson() {
+    public function getTagsAsJson()
+    {
         $arOut = array();
         foreach ($this->getTags() as $tag) {
             $arOut[] = $tag->__toString();
@@ -286,8 +346,41 @@ class Article
         return json_encode($arOut);
     }
 
-    public function setTagsAsJson($tagString) {
-
+    public function setTagsAsJson($tagsAsJson) {
+        $this->tagsAsJsonBuffer = $tagsAsJson;
     }
+
+    public function getTagsAsJsonBuffer() {
+        return $this->tagsAsJsonBuffer;
+    }
+
+    public function clearTagsAsJsonBuffer() {
+        $this->tagsAsJsonBuffer = '';
+    }
+
+    /**
+     *
+     */
+    public function publish()
+    {
+        $this->published = true;
+    }
+
+    /**
+     *
+     */
+    public function unPublish()
+    {
+        $this->published = false;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPublished()
+    {
+        return $this->published;
+    }
+
 
 }

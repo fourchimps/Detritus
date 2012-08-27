@@ -36,6 +36,8 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
             $article->setHeadline($lipsumGenerator->get('words', rand(2,7), false));
             $body = $lipsumGenerator->get('paragraphs', rand(1,2), rand(0,1));
             $article->setBody($body);
+            $article->publish();
+
             if (strlen($body) > 254) {
                 $article->setIntro(
                     substr($article->getBody(), 0, 254) . '...'
@@ -50,8 +52,6 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
                 $article->setAuthor($this->getReference('user-admin2'));
             }
 
-
-
             // Add some tags
             $countTagsToAdd = rand(0,24);
             for ($j=0; $j < $countTagsToAdd; $j++ ) {
@@ -62,18 +62,20 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
                 }
             }
 
-            // first three articles should be tagged "layout_hero" (tag-0)
+            // first three articles should be hero:
             if ($i < 3) {
-                $article->addTag($this->getReference('tag-0'));
-            }
-
-            // first three articles should be tagged "layout_section" (tag-1)
-            if ($i >= 3 && $i < 6) {
-                $article->addTag($this->getReference('tag-1'));
+                $article->setHero(true);
+                $article->setSection(false);
+            } elseif ($i >= 3 && $i < 6) {
+                // next three articles should be section (tag-1)
+                $article->setHero(false);
+                $article->setSection(true);
+            } else {
+                $article->setHero(false);
+                $article->setSection(false);
             }
 
             $manager->persist($article);
-
     	}
        
         $manager->flush();

@@ -24,7 +24,7 @@ class LoadTagTestData extends AbstractFixture implements OrderedFixtureInterface
     {
     	$lipsumGenerator = $this->container->get('fourchimps_lipsum.lipsum');
     	
-    	$words = array('layout_hero','layout_section');
+    	$words = array();
     	
     	while(count($words) < LoadTagTestData::COUNT) {
     		$new_words = explode(
@@ -43,7 +43,6 @@ class LoadTagTestData extends AbstractFixture implements OrderedFixtureInterface
     		$words = array_unique($words + $new_words);
     	}
 
-        $tagGroupPlaceholder = $this->getReference('taggroup-placeholders');
         $tagGroupUser = $this->getReference('taggroup-user');
         $tagGroupSection1 = $this->getReference('taggroup-section1');
         $tagGroupSection2 = $this->getReference('taggroup-section2');
@@ -54,16 +53,18 @@ class LoadTagTestData extends AbstractFixture implements OrderedFixtureInterface
     		$tag = new Tag();
     		$tag->setTag($words[$i]);
 
-            if ($i < 2) {
-                $tag->setTagGroup($tagGroupPlaceholder);
-            } elseif ($i < 6) {
+            if ($i < 4) {
                 $tag->setTagGroup($tagGroupSection1);
-            } elseif ($i < 11) {
+                $tag->setNavigable(true);
+            } elseif ($i < 9) {
                 $tag->setTagGroup($tagGroupSection2);
-            } elseif ($i < 14) {
+                $tag->setNavigable(true);
+            } elseif ($i < 12) {
                 $tag->setTagGroup($tagGroupSection3);
+                $tag->setNavigable(true);
             } else {
                 $tag->setTagGroup($tagGroupUser);
+                $tag->setNavigable(false);
             }
 
     		$manager->persist($tag);

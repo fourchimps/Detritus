@@ -3,6 +3,7 @@
 namespace FourChimps\ArticleBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ArticleRepository
@@ -12,13 +13,91 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-    function findMostRecent($count = 5)
+    function findPublishedMostRecent($count = 5)
     {
         return $this
             ->createQueryBuilder('a')
             ->addOrderBy('a.created', 'DESC')
+            ->andWhere('a.published = true')
             ->setMaxResults($count)
             ->getQuery()
             ->getResult();
     }
+
+    function findPublishedHero()
+    {
+        return $this
+            ->createQueryBuilder('a')
+            ->addOrderBy('a.created', 'DESC')
+            ->andWhere('a.hero = true')
+            ->andWhere('a.published = true')
+            ->getQuery()
+            ->getResult();
+    }
+
+    function findPublishedSections()
+    {
+        return $this
+            ->createQueryBuilder('a')
+            ->addOrderBy('a.created', 'DESC')
+            ->andWhere('a.section = true')
+            ->andWhere('a.published = true')
+            ->getQuery()
+            ->getResult();
+    }
+
+    function persistTagsFromJsonBuffer(Article $article)
+    {
+        // turn the incoming JSON string into an array - if we cant do it then return (a proper empty array '[]' should
+        // be returned if the tagsAsJsonBuffer has been set.
+        $tagNamesArray = json_decode($article->getTagsAsJsonBuffer());
+        if ( ! is_array($tagNamesArray)) {
+            return;
+        }
+
+        // Set up some Repositories
+        $tagRepository = $this->getEntityManager()->getRepository('FourChimpsArticleBundle:Tag');
+        $tagGroupRepository = $this->getEntityManager()->getRepository('FourChimpsArticleBundle:TagGroup');
+
+        // By default new tags get added to the first tag group we find that's Visible
+        $visibleTagGroup = $tagGroupRepository->findOneByVisible(true);
+        if (!$visibleTagGroup) {
+            // todo proper exception
+            throw new \Doctrine\Common\CommonException('No visible Tag Group found');
+        }
+
+        // For each of the new tags
+        $tagCollection = new ArrayCollection();
+        foreach($tagNamesArray as $tagName) {
+            //find the Object that backs it
+            $tag = $tagRepository->findOneByTag($tagName);
+
+            // or create a new one
+            if (!$tag) {
+                $tag = new Tag();
+                $tag->setTag($tagName);
+                $tag->setNavigable(false);
+                $tag->setTagGroup($visibleTagGroup);
+                $this->getEntityManager()->persist($tag);
+            }
+
+            $tagCollection->add($tag);
+
+            // If the Article doesn't have the tag, add it
+            if ( ! $article->hasTag($tag)) {
+                $article->addTag($tag);
+            }
+        }
+
+        // For each of the existing tags
+        foreach($article->getTags() as $existingTag) {
+            if ( ! $tagCollection->contains($existingTag)) {
+                $article->removeTag($existingTag);
+            }
+        }
+
+        // don't flush - were just 'persisting' - but do clear the JSon Buffer
+        $article->clearTagsAsJsonBuffer();
+    }
+
 }
