@@ -1,0 +1,6 @@
+# Form Type Service
+services:
+    form.type.tag_edit:
+        class: FourChimps\TagEditBundle\Form\Type\TagEditType
+        tags:
+            - { name: form.type, alias: tag_edit }

@@ -1,0 +1,6 @@
+# Twig Extensions
+services:
+  four_chimps.twig_extension:
+    class: FourChimps\TwigBundle\Twig\TwigExtension
+    tags:
+      - { name: twig.extension }

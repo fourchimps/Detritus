@@ -1,0 +1,6 @@
+# Form Type Service
+services:
+    form.type.ckeditor:
+        class: FourChimps\CKEditorBundle\Form\Type\CKEditorType
+        tags:
+            - { name: form.type, alias: ckeditor }

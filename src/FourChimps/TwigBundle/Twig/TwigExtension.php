@@ -1,6 +1,6 @@
 <?php
 
-namespace FourChimps\TwigExtensionBundle\Extension;
+namespace FourChimps\TwigBundle\Twig;
 use Twig_Extension as BaseTwig_Extension;
 
 class TwigExtension extends BaseTwig_Extension {
@@ -26,7 +26,7 @@ class TwigExtension extends BaseTwig_Extension {
 	}
 
 	public function getName() {
-		return 'fourchimps_twig_extension';
+		return 'four_chimps.twig_extension';
 	}
 
 }

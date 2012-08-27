@@ -33,7 +33,7 @@ class AppKernel extends Kernel
             new FourChimps\ArticleBundle\FourChimpsArticleBundle(),
             new FourChimps\AdminBundle\FourChimpsAdminBundle(),
             new FourChimps\CrudGeneratorBundle\FourChimpsCrudGeneratorBundle(),
-            new FourChimps\TwigExtensionBundle\FourChimpsTwigExtensionBundle(),
+            new FourChimps\TwigBundle\FourChimpsTwigBundle(),
             new FourChimps\CKEditorBundle\FourChimpsCKEditorBundle(),
             new FourChimps\TagEditBundle\FourChimpsTagEditBundle(),
         );
