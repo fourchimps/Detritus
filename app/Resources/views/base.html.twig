@@ -62,6 +62,9 @@
                     <li {% if app.request.attributes.get('_route') == 'article' %}class="active"{% endif %}><a href="{{ path('article') }}">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li class="btn-danger"><a href="{{ path('dashboard') }}">Admin</a></li>
+                    {% endif %}
                 </ul>
                 <ul class="nav pull-right">
                     {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}

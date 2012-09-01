@@ -6,9 +6,9 @@
     {% form_theme form 'FourChimpsThemeBundle:Form:theme.html.twig' %}
         
 
-<h1>Article creation</h1>
+<h1>Tag creation</h1>
 
-<form class="well form-horizontal" action="{{ path('admin_article_create') }}" method="post" {{ form_enctype(form) }}>
+<form class="well form-horizontal" action="{{ path('admin_tag_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
 
     <div class="form-actions">
@@ -21,7 +21,7 @@
 
 <div class="record_actions">
     
-        <a class="btn" href="{{ path('admin_article') }}">
+        <a class="btn" href="{{ path('admin_tag') }}">
             <i class="icon-chevron-left"></i>
             Back to the list
         </a>

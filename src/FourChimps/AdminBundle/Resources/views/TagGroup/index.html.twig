@@ -1,0 +1,42 @@
+
+{% extends 'FourChimpsAdminBundle:Dashboard:dashboard.html.twig' %}
+
+{% block body %}
+        
+
+<h1>TagGroup list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th> {{ ' id '|uncamelcase }}</th>
+            <th> {{ ' name '|uncamelcase }}</th>
+            <th> {{ ' navigable '|uncamelcase }}</th>
+            <th> {{ ' sortOrder '|uncamelcase }}</th>
+            <th> {{ ' visible '|uncamelcase }}</th>
+            <th> {{ ' active '|uncamelcase }}</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('admin_taggroup_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.navigable }}</td>
+            <td>{{ entity.sortOrder }}</td>
+            <td>{{ entity.visible }}</td>
+            <td>{{ entity.active }}</td>
+            <td>                        <a class="btn" href="{{ path('admin_taggroup_show', { 'id': entity.id }) }}">show</a>                        <a class="btn" href="{{ path('admin_taggroup_edit', { 'id': entity.id }) }}">edit</a>            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+	<a class = "btn btn-primary" href="{{ path('admin_taggroup_new') }}">
+		<i class="icon-white icon-plus-sign"></i>
+    	Create a new entry
+	</a>
+
+
+{% endblock %}

@@ -1,16 +1,10 @@
 {% raw %}
-{% extends '::base.html.twig' %}
+{% extends 'FourChimpsAdminBundle:Dashboard:dashboard.html.twig' %}
 
-{% block body %}
-    {% endraw %}
+{% block body %}{% endraw %}
     {% if form_name is defined %}
     {% raw %}
-    {% form_theme {% endraw %}{{form_name}}{% raw %} 'FourChimpsThemeBundle:Form:theme.html.twig' %}
-    {% endraw %}
+    {% form_theme {% endraw %}{{form_name}}{% raw %} 'FourChimpsThemeBundle:Form:theme.html.twig' %}{% endraw %}
     {% endif %}
     {% raw %}
-
-    {% block sidebar %}
-    <h1>Sidebar</h1>
-    {% endblock %}
-{% endraw %}-
+{% endraw %}

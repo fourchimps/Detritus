@@ -97,6 +97,7 @@ EOT
         ));
         $target = $dialog->askAndValidate($output, $dialog->getQuestion('The Target bundle', $input->getOption('target')),
             array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleName'), false, $input->getOption('target'));
+        $input->setOption('target', $target);
 
         // write?
         $withWrite = $input->getOption('with-write') ?: false;

@@ -1,0 +1,50 @@
+
+{% extends 'FourChimpsAdminBundle:Dashboard:dashboard.html.twig' %}
+
+{% block body %}
+        
+
+<h1>Tag</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th> {{ ' id '|uncamelcase }}</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' tag '|uncamelcase }}</th>
+            <td>{{ entity.tag }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' navigable '|uncamelcase }}</th>
+            <td>{{ entity.navigable }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="record_actions">
+        <form action="{{ path('admin_tag_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+    
+        <a class="btn" href="{{ path('admin_tag') }}">
+            <i class="icon-chevron-left"></i>
+            Back to the list
+        </a>
+    
+            <a class="btn" href="{{ path('admin_tag_edit', { 'id': entity.id }) }}">
+            <i class="icon-edit"></i>
+            Edit
+        </a>
+    
+    
+        <button class ="btn btn-danger" type="submit">
+        	<i class="icon-white icon-remove"></i>
+        	Delete
+        </button>
+    </form>
+    </div>
+
+
+
+{% endblock %}

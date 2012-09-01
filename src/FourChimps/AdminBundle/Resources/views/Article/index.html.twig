@@ -1,14 +1,9 @@
 
-{% extends '::base.html.twig' %}
+{% extends 'FourChimpsAdminBundle:Dashboard:dashboard.html.twig' %}
 
 {% block body %}
-    
         
 
-    {% block sidebar %}
-    <h1>Sidebar</h1>
-    {% endblock %}
--
 <h1>Article list</h1>
 
 <table class="records_list">
@@ -21,6 +16,9 @@
             <th> {{ ' intro '|uncamelcase }}</th>
             <th> {{ ' created '|uncamelcase }}</th>
             <th> {{ ' updated '|uncamelcase }}</th>
+            <th> {{ ' published '|uncamelcase }}</th>
+            <th> {{ ' hero '|uncamelcase }}</th>
+            <th> {{ ' section '|uncamelcase }}</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -34,6 +32,9 @@
             <td>{{ entity.intro }}</td>
             <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{{ entity.published }}</td>
+            <td>{{ entity.hero }}</td>
+            <td>{{ entity.section }}</td>
             <td>                        <a class="btn" href="{{ path('admin_article_show', { 'id': entity.id }) }}">show</a>                        <a class="btn" href="{{ path('admin_article_edit', { 'id': entity.id }) }}">edit</a>            </td>
         </tr>
     {% endfor %}

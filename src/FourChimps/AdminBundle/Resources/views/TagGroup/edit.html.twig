@@ -6,9 +6,9 @@
     {% form_theme edit_form 'FourChimpsThemeBundle:Form:theme.html.twig' %}
         
 
-<h1>Article Edit</h1>
+<h1>TagGroup Edit</h1>
 
-<form class="well form-horizontal" action="{{ path('admin_article_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+<form class="well form-horizontal" action="{{ path('admin_taggroup_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
 
     <div class="form-actions">
@@ -20,10 +20,10 @@
 </form>
 
 <div class="record_actions">
-        <form action="{{ path('admin_article_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('admin_taggroup_delete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
     
-        <a class="btn" href="{{ path('admin_article') }}">
+        <a class="btn" href="{{ path('admin_taggroup') }}">
             <i class="icon-chevron-left"></i>
             Back to the list
         </a>

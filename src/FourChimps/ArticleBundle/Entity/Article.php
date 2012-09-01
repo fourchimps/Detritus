@@ -7,11 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+use FourChimps\AdminBundle\Annotation\Admin;
+
 /**
  * FourChimps\ArticleBundle\Entity\Article
  *
  * @ORM\Table(name="article")
  * @ORM\Entity(repositoryClass="ArticleRepository")
+ * @Admin\Table(name="Article")
  */
 class Article
 {
@@ -21,6 +24,7 @@ class Article
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Admin\Column(filter="upper")
      */
     private $id;
 

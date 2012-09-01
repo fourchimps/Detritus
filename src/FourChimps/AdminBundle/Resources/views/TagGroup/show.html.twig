@@ -1,0 +1,62 @@
+
+{% extends 'FourChimpsAdminBundle:Dashboard:dashboard.html.twig' %}
+
+{% block body %}
+        
+
+<h1>TagGroup</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th> {{ ' id '|uncamelcase }}</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' name '|uncamelcase }}</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' navigable '|uncamelcase }}</th>
+            <td>{{ entity.navigable }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' sortOrder '|uncamelcase }}</th>
+            <td>{{ entity.sortOrder }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' visible '|uncamelcase }}</th>
+            <td>{{ entity.visible }}</td>
+        </tr>
+        <tr>
+            <th> {{ ' active '|uncamelcase }}</th>
+            <td>{{ entity.active }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="record_actions">
+        <form action="{{ path('admin_taggroup_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+    
+        <a class="btn" href="{{ path('admin_taggroup') }}">
+            <i class="icon-chevron-left"></i>
+            Back to the list
+        </a>
+    
+            <a class="btn" href="{{ path('admin_taggroup_edit', { 'id': entity.id }) }}">
+            <i class="icon-edit"></i>
+            Edit
+        </a>
+    
+    
+        <button class ="btn btn-danger" type="submit">
+        	<i class="icon-white icon-remove"></i>
+        	Delete
+        </button>
+    </form>
+    </div>
+
+
+
+{% endblock %}
