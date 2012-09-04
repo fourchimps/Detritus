@@ -36,7 +36,7 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
             $article->setHeadline($lipsumGenerator->get('words', rand(2,7), false));
             $body = $lipsumGenerator->get('paragraphs', rand(1,2), rand(0,1));
             $article->setBody($body);
-            $article->publish();
+
 
             if (strlen($body) > 254) {
                 $article->setIntro(
@@ -66,13 +66,20 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
             if ($i < 3) {
                 $article->setHero(true);
                 $article->setSection(false);
+                $article->publish();
             } elseif ($i >= 3 && $i < 6) {
                 // next three articles should be section (tag-1)
                 $article->setHero(false);
                 $article->setSection(true);
+                $article->publish();
             } else {
                 $article->setHero(false);
                 $article->setSection(false);
+                if (rand(0,10) < 7) {
+                    $article->publish();
+                } else {
+                    $article->unPublish();
+                }
             }
 
             $date = new \DateTime();

@@ -8,7 +8,9 @@
         <thead>
         <tr>
             {% for column in columns %}
-                <th >{{ column.getAlias() }}</th>
+                {% if( not column.isMetaData()) %}
+                    <th>{{ column.getAlias() }}</th>
+                {% endif %}
             {% endfor %}
 {#            <th width="5%">Id</th>
             <th width="50%">Headline</th>
@@ -47,6 +49,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% include "FourChimpsAdminBundle::_datatable.html.twig" with {'ajax_path' : path('list_articles') } %}
+    {% include "FourChimpsAdminBundle::_datatable.html.twig" with { 'ajax_path' : path('list_articles'),
+                                                                    'edit_path' : path('admin_article_edit', {'id':'ID_PLACEHOLDER'})
+     } %}
 {% endblock %}
 

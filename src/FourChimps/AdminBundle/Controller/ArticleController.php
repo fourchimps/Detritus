@@ -249,7 +249,8 @@ class ArticleController extends Controller
             $row = array();
             for ( $i=0 ; $i<count($columns) ; $i++ ) {
                 $expressionGenerator = $columns[$i]->getSelectBy();
-                $row[$i] = $expressionGenerator($article);
+                $index = $columns[$i]->isMetaData() ? $columns[$i]->getAlias() : $i ;
+                $row[$index] = $expressionGenerator($article);
             }
             $aaData[]=$row;
         }

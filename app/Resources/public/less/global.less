@@ -1,6 +1,12 @@
 /* Global styles - variables isnt imported here so redeclare anything boostrappy that you need */
 
-@grayLighter:           #BBBFC2;
+@black:                 #000;
+@grayDarker:            #222;
+@grayDark:              #333;
+@gray:                  #555;
+@grayLight:             #999;
+@grayLighter:           #eee;
+@white:                 #fff;
 
 @red:                   #9d261d;
 @redLighter:            lighten(@red, 15%);
@@ -52,4 +58,10 @@ th.headerSortDown:after {
     font-family: 'FontAwesome';
     content: "  \f078";
     float:right;
+}
+
+tr.disabled {
+    color: @gray;
+    font-style: italic;
+
 }

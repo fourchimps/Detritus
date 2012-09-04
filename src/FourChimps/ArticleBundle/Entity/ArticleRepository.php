@@ -162,20 +162,24 @@ class ArticleRepository extends EntityRepository
         if ($globalFilter) {
             $searchString = "{$globalFilter}";
             foreach($columns as $column) {
-                $expressionGenerator = $column->getSearchBy();
-                $expression = $expressionGenerator($queryBuilder, $searchString);
-                if ($expression) {
-                    $queryBuilder->orWhere($expression);
+                if ( ! $column->isMetaData()) {
+                    $expressionGenerator = $column->getSearchBy();
+                    $expression = $expressionGenerator($queryBuilder, $searchString);
+                    if ($expression) {
+                        $queryBuilder->orWhere($expression);
+                    }
                 }
             }
         }
 
         // individual column filters
         foreach($columnFilters as $columnFilter) {
-            $expressionGenerator = $columnFilter->column->getSearchBy();
-            $expression = $expressionGenerator($queryBuilder, $columnFilter->filter);
-            if ($expression) {
-                $queryBuilder->andWhere($expression);
+            if ( ! $columnFilter->column->isMetaData()) {
+                $expressionGenerator = $columnFilter->column->getSearchBy();
+                $expression = $expressionGenerator($queryBuilder, $columnFilter->filter);
+                if ($expression) {
+                    $queryBuilder->andWhere($expression);
+                }
             }
         }
 
@@ -198,7 +202,8 @@ class ArticleRepository extends EntityRepository
                 },
                 function ($entity) {
                     return $entity->getId();
-                }
+                },
+                false
             ),
             // Headline: Example of Text
             1 => new DataTableColumn(
@@ -215,7 +220,8 @@ class ArticleRepository extends EntityRepository
                 },
                 function ($entity) {
                     return $entity->getHeadline();
-                }
+                },
+                false
             ),
             // Author: Example of Compound
             2 => new DataTableColumn(
@@ -239,7 +245,8 @@ class ArticleRepository extends EntityRepository
                 },
                 function ($entity) {
                     return $entity->getAuthor()->__toString();
-                }
+                },
+                false
             ),
             // Status: Example of Bitfield Collection
             3 => new DataTableColumn(
@@ -262,7 +269,8 @@ class ArticleRepository extends EntityRepository
                         ($entity->isPublished() ? '<span class="label label-success">Published</span>&nbsp;' : '') .
                         ($entity->isHero() ? '<span class="label label-info">Hero</span>&nbsp;' : '') .
                         ($entity->isSection() ? '<span class="label label-warning">Section</span>' : '');
-                }
+                },
+                false
             ),
             // Created: Example of Date
             4 => new DataTableColumn(
@@ -279,10 +287,31 @@ class ArticleRepository extends EntityRepository
                 },
                 function ($entity) {
                     return $entity->getCreated()->format('d-m-Y');
-                }
+                },
+                false
+            ),
+            // "DT_RowId": Metadata - the ID of the row (used for click-through)
+            5 => new DataTableColumn(
+                'DT_RowId',
+                function (QueryBuilder $qb, $str) { return ''; },
+                function (QueryBuilder $qb, $dir) { return ''; },
+                function ($entity) {
+                    return 'row_' . $entity->getId();
+                },
+                true
+            ),
+            // "DT_RowClass": Metadata - the Class of the row (used to low-light disabled articles etc)
+            6 => new DataTableColumn(
+                'DT_RowClass',
+                function (QueryBuilder $qb, $str) { return ''; },
+                function (QueryBuilder $qb, $dir) { return ''; },
+                function ($entity) {
+                    if ( ! $entity->isPublished()) {
+                        return "disabled";
+                    }
+                },
+                true
             )
         );
-
-
     }
 }
