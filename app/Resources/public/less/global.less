@@ -20,10 +20,36 @@ small {
     font-size: smaller;
 }
 
+div#list-table_length select {
+    width:80px;
+}
+
+.dataTables_filter {
+    float:right;
+}
+
+.pagination {
+    margin: 0px;
+}
+
+.tablecontrols {
+    margin-top: 18px ;
+    margin-bottom: 18px ;
+}
+
 .navbar .nav > li.text {
     padding: 9px 10px 11px;
     line-height: 19px;
     color: @grayLighter;
 }
 
-
+th.headerSortUp:after {
+    font-family: 'FontAwesome';
+    content: "  \f077";
+    float:right;
+}
+th.headerSortDown:after {
+    font-family: 'FontAwesome';
+    content: "  \f078";
+    float:right;
+}

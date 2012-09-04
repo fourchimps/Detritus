@@ -3,12 +3,14 @@
 namespace FourChimps\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FourChimps\ArticleBundle\Entity\Article;
 use FourChimps\AdminBundle\Form\ArticleType;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Article controller.
@@ -27,10 +29,10 @@ class ArticleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FourChimpsArticleBundle:Article')->findAll();
+        $columns = $em->getRepository('FourChimpsArticleBundle:Article')->getDataTableDefinition();
 
         return array(
-            'entities' => $entities,
+            'columns' => $columns,
         );
     }
 
@@ -196,4 +198,72 @@ class ArticleController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Driver for jQuery DataTable
+     *
+     * @Route("/list_data/{$request}", name="list_articles")
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function listDataAction(Request $request) {
+
+        $repository = $this->getDoctrine()->getRepository('FourChimpsArticleBundle:Article');
+        $columns = $repository->getDataTableDefinition();
+
+        /* paging */
+        $length = $request->query->get('iDisplayLength');
+        $start = $request->query->get('iDisplayStart');
+
+        /* column sorting */
+        $sorts = array();
+        if ($request->query->get('iSortCol_0') || $request->query->get('iSortCol_0') === '0') {
+            for ( $i=0 ; $i < intval( $request->query->get('iSortingCols') ) ; $i++ ) {
+                if ( $request->query->get('bSortable_' . intval($request->query->get('iSortCol_'.$i))) == "true" ) {
+                    $sorts[] = (object) array(
+                        'column' => $columns[$request->query->get('iSortCol_'.$i)],
+                        'direction' => $request->query->get('sSortDir_'.$i)
+                    );
+                }
+            }
+        }
+
+        /* global filtering */
+        $globalFilter = $request->query->get('sSearch');
+
+        /* Individual column filtering */
+        $columnFilters = array();
+        for ( $i=0 ; $i<count($columns) ; $i++ ) {
+            if ( $request->query->get('bSearchable_'.$i)  == "true" && $request->query->get('sSearch_'.$i) != '') {
+                $columnFilters[] = (object) array(
+                    'column' => $columns[$i],
+                    'filter' => $request->query->get('sSearch_'.$i)
+                );
+            }
+        }
+
+        $list = $repository->getPagedSortedFilteredArticles($start, $length, $sorts, $columns, $globalFilter, $columnFilters);
+        $aaData = array();
+        foreach ($list as $article) {
+            $row = array();
+            for ( $i=0 ; $i<count($columns) ; $i++ ) {
+                $expressionGenerator = $columns[$i]->getSelectBy();
+                $row[$i] = $expressionGenerator($article);
+            }
+            $aaData[]=$row;
+        }
+
+        $totalRecords = $repository->getFilteredArticlesCount($columns, $globalFilter, $columnFilters);
+
+        $output = array(
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecords,
+            "sEcho"=>$request->query->get('sEcho'),
+            "aaData" => $aaData,
+        );
+
+        return  new Response(json_encode($output));
+    }
+
 }

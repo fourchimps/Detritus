@@ -4,6 +4,8 @@ namespace FourChimps\ArticleBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\QueryBuilder;
+use FourChimps\AdminBundle\Controller\DataTableColumn;
 
 /**
  * ArticleRepository
@@ -100,4 +102,187 @@ class ArticleRepository extends EntityRepository
         $article->clearTagsAsJsonBuffer();
     }
 
+    /**
+     * @param $offset
+     * @param $limit
+     * @param $sorts
+     * @param $columns
+     * @param $globalFilter
+     * @param $columnFilters
+     * @return mixed
+     */
+    function getPagedSortedFilteredArticles($offset, $limit, $sorts, $columns, $globalFilter, $columnFilters) {
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->addSelect('u')
+            ->innerJoin('a.author', 'u')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        foreach($sorts as $sort) {
+            $expressionGenerator = $sort->column->getSortBy();
+            $queryBuilder = $expressionGenerator($queryBuilder, $sort->direction);
+        }
+
+        $queryBuilder = $this->filterQueryBuilder($queryBuilder, $columns, $globalFilter, $columnFilters);
+
+        $query = $queryBuilder->getQuery();
+
+        //die($query->getSQL());
+
+        return $query->getResult();
+    }
+
+    function getFilteredArticlesCount($columns, $globalFilter, $columnFilters) {
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->addSelect('u')
+            ->innerJoin('a.author', 'u')
+            ->select('COUNT(a.id)');
+
+        $queryBuilder = $this->filterQueryBuilder($queryBuilder, $columns, $globalFilter, $columnFilters);
+
+        $query = $queryBuilder->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
+
+    /**
+     * filterQueryBuilder
+     *
+     * Adds the field level and global filters to an existing queryBuilder object
+     *
+     * @param QueryBuilder $queryBuilder
+     * @param array $columns
+     * @param string $globalFilter
+     * @param array $columnFilters
+     * @return QueryBuilder
+     */
+    private function filterQueryBuilder($queryBuilder, $columns, $globalFilter, $columnFilters) {
+
+        // global filter
+        if ($globalFilter) {
+            $searchString = "{$globalFilter}";
+            foreach($columns as $column) {
+                $expressionGenerator = $column->getSearchBy();
+                $expression = $expressionGenerator($queryBuilder, $searchString);
+                if ($expression) {
+                    $queryBuilder->orWhere($expression);
+                }
+            }
+        }
+
+        // individual column filters
+        foreach($columnFilters as $columnFilter) {
+            $expressionGenerator = $columnFilter->column->getSearchBy();
+            $expression = $expressionGenerator($queryBuilder, $columnFilter->filter);
+            if ($expression) {
+                $queryBuilder->andWhere($expression);
+            }
+        }
+
+        return $queryBuilder;
+    }
+
+    public function getDataTableDefinition() {
+        return array (
+            // ID: Example of Integer
+            0 => new DataTableColumn(
+                'ID',
+                function (QueryBuilder $qb, $str) {
+                    return $qb->expr()->eq(
+                        'a.id',
+                        $qb->expr()->literal($str)
+                    );
+                },
+                function (QueryBuilder $qb, $dir) {
+                    return $qb->addOrderBy('a.id', $dir);
+                },
+                function ($entity) {
+                    return $entity->getId();
+                }
+            ),
+            // Headline: Example of Text
+            1 => new DataTableColumn(
+                'Headline',
+                function (QueryBuilder $qb, $str) {
+                    $str = "%{$str}%";
+                    return $qb->expr()->like(
+                        'a.headline',
+                        $qb->expr()->literal($str)
+                    );
+                },
+                function (QueryBuilder $qb, $dir) {
+                    return $qb->addOrderBy('a.headline', $dir);
+                },
+                function ($entity) {
+                    return $entity->getHeadline();
+                }
+            ),
+            // Author: Example of Compound
+            2 => new DataTableColumn(
+                'Author',
+                function (QueryBuilder $qb, $str) {
+                    $str = "%{$str}%";
+                    return $qb->expr()->like(
+                        $qb->expr()->concat(
+                            'u.firstName',
+                            $qb->expr()->concat(
+                                $qb->expr()->literal(' '),
+                                'u.lastName'
+                            )
+                        ),
+                        $qb->expr()->literal($str)
+                    );
+                },
+                function (QueryBuilder $qb, $dir) {
+                    return $qb->addOrderBy('u.lastName', $dir)
+                        ->addOrderBy('u.firstName', $dir);
+                },
+                function ($entity) {
+                    return $entity->getAuthor()->__toString();
+                }
+            ),
+            // Status: Example of Bitfield Collection
+            3 => new DataTableColumn(
+                'Status',
+                function (QueryBuilder $qb, $str) {
+                    switch($str) {
+                        case 'Published' : return 'a.published >0';
+                        case 'Hero' : return 'a.hero >0';
+                        case 'Section' : return 'a.section >0';
+                        default : return '';
+                    }
+                },
+                function (QueryBuilder $qb, $dir) {
+                    return $qb->addOrderBy('a.published', $dir)
+                        ->addOrderBy('a.hero', $dir)
+                        ->addOrderBy('a.section', $dir);
+                },
+                function ($entity) {
+                    return
+                        ($entity->isPublished() ? '<span class="label label-success">Published</span>&nbsp;' : '') .
+                        ($entity->isHero() ? '<span class="label label-info">Hero</span>&nbsp;' : '') .
+                        ($entity->isSection() ? '<span class="label label-warning">Section</span>' : '');
+                }
+            ),
+            // Created: Example of Date
+            4 => new DataTableColumn(
+                'Created',
+                function (QueryBuilder $qb, $str) {
+                    $str = "%{$str}%";
+                    return $qb->expr()->like(
+                        'a.created',
+                        $qb->expr()->literal($str)
+                    );
+                },
+                function (QueryBuilder $qb, $dir) {
+                    return $qb->addOrderBy('a.created', $dir);
+                },
+                function ($entity) {
+                    return $entity->getCreated()->format('d-m-Y');
+                }
+            )
+        );
+
+
+    }
 }

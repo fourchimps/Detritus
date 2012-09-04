@@ -45,7 +45,7 @@ class LoadUserTestData extends AbstractFixture implements OrderedFixtureInterfac
 
         $user = new User();
         $user->setUsername('user');
-        $user->setFirstName('Chester');
+        $user->setFirstName('Zander');
         $user->setLastName('Chimp');
         $user->setEmail('user@fourchimps.com');
         $user->setPlainPassword('user');

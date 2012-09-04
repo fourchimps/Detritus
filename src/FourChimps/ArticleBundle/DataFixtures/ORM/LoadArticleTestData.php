@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection as DI;
 
 class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInterface, DI\ContainerAwareInterface
 {
-	const COUNT=10;
+	const COUNT=100;
 	
 	private $container;
 	
@@ -74,6 +74,11 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
                 $article->setHero(false);
                 $article->setSection(false);
             }
+
+            $date = new \DateTime();
+            $dateInterval = new \DateInterval('PT' . rand(0, 60*60*24*365*3) . 'S');
+            $date->sub($dateInterval);
+            $article->setCreated($date);
 
             $manager->persist($article);
     	}
