@@ -25,7 +25,7 @@ class ArticleType extends AbstractType
                 'toolbar' => FourChimpsCKEditorBundle::$defaultToolbar,
                 'skin' => 'BootstrapCK-Skin',
                 'resize_maxWidth' => '%',
-                'extraPlugins' => 'baii,autogrow',
+                'extraPlugins' => 'baii,autogrow,code',
                 'height' => 100,
                 'autoGrow_minHeight' => 100,
                 'removePlugins' => 'elementspath,resize',

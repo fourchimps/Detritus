@@ -45,6 +45,10 @@ class FourChimpsCKEditorBundle extends Bundle
 
     public static $defaultToolbar = array(
         array(
+            'name' => 'document',
+            'items' => array('Source','-','NewPage')
+        ),
+        array(
             'name' => 'styles',
             'items' => array('Format')
         ),
@@ -59,7 +63,7 @@ class FourChimpsCKEditorBundle extends Bundle
         ),
         array(
             'name' => 'insert',
-            'items' => array('Image','Table','HorizontalRule','SpecialChar','PageBreak')
+            'items' => array('Image','Table','HorizontalRule','SpecialChar','PageBreak','Code')
         ),
     );
 
