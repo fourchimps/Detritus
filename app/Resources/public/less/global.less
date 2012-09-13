@@ -4,7 +4,7 @@
 @grayDarker:            #222;
 @grayDark:              #333;
 @gray:                  #555;
-@grayLight:             #999;
+@redDarker:             #999;
 @grayLighter:           #eee;
 @white:                 #fff;
 
@@ -63,5 +63,48 @@ th.headerSortDown:after {
 tr.disabled {
     color: @gray;
     font-style: italic;
-
 }
+
+.hero-unit {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  h1 {
+    margin-bottom: 0;
+    font-size: 42px;
+  }
+  p {
+    font-size: 14px;
+  }
+}
+
+
+// Gradients
+#gradient {
+  .vertical(@startColor: #555, @endColor: #333) {
+    background-color: mix(@startColor, @endColor, 60%);
+    background-image: -moz-linear-gradient(top, @startColor, @endColor); // FF 3.6+
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor)); // Safari 4+, Chrome 2+
+    background-image: -webkit-linear-gradient(top, @startColor, @endColor); // Safari 5.1+, Chrome 10+
+    background-image: -o-linear-gradient(top, @startColor, @endColor); // Opera 11.10
+    background-image: linear-gradient(to bottom, @startColor, @endColor); // Standard, IE10
+    background-repeat: repeat-x;
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(@startColor),argb(@endColor))); // IE9 and down
+  }
+}
+
+.navbar .nav > li.btn-danger > a {
+  #gradient > .vertical(@redDarker,  @redDark);
+}
+
+.navbar .nav > li.btn-danger.active > a {
+  #gradient > .vertical(@redDark,  @redDarker);
+}
+
+
+// Hover
+.navbar .nav > li.btn-danger > a:focus,
+.navbar .nav > li.btn-danger > a:hover {
+  #gradient > .vertical(@redDark,  @redDarker);
+}
+
+

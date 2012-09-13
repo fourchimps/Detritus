@@ -9,7 +9,9 @@ class TwigExtension extends BaseTwig_Extension {
 		return array(
 				'var_dump' => new \Twig_Filter_Function('var_dump'),
 				'highlight' => new \Twig_Filter_Method($this, 'highlight'),
-				'uncamelcase' => new \Twig_Filter_Method($this, 'inverseCamelCase'));
+				'uncamelcase' => new \Twig_Filter_Method($this, 'inverseCamelCase'),
+                'substr'  => new \Twig_Filter_Method($this, 'substrFilter')
+        );
 	}
 
 	public function highlight($sentence, $expr) {
@@ -24,6 +26,10 @@ class TwigExtension extends BaseTwig_Extension {
 					  preg_replace('/(?!^)[[:upper:]]+/', ' $0',
 										$string))));
 	}
+
+    public function substrFilter($sentence, $start, $end) {
+        return substr($sentence, $start, $end);
+    }
 
 	public function getName() {
 		return 'four_chimps.twig_extension';
