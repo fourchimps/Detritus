@@ -5,6 +5,7 @@ namespace FourChimps\ArticleBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use FourChimps\ArticleBundle\Entity\TagGroup;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * FourChimps\ArticleBundle\Entity\Tag
@@ -51,6 +52,22 @@ class Tag {
      * @ORM\Column(name="navigable", type="boolean")
      */
     private $navigable;
+
+    /**
+     * @var datetime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="date")
+     */
+    private $created;
+
+    /**
+     * @var datetime $updated
+     *
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
 
     public function __construct() {
         $this->articles= new ArrayCollection();

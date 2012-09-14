@@ -314,4 +314,11 @@ class ArticleRepository extends EntityRepository
             )
         );
     }
+
+    /**
+     *
+     */
+    public function getTableStats() {
+
+    }
 }

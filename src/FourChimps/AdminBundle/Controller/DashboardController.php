@@ -20,8 +20,34 @@ class DashboardController extends Controller
      * @Template()
      */
     public function dashboardAction() {
+        $tables = array(
+            array('name'=>'Article'),
+            array('name'=>'Tag'),
+            array('name'=>'Tag Group'),
+        );
 
-        return array();
+        return array(
+            'tables' => $tables
+        );
     }
+
+    /**
+     * @Route("/{$table}/tablestats", name="tablestats")
+     * @Template()
+     */
+    public function tableAction($table) {
+
+        $repoName = "FourChimpsArticleBundle:{$table}";
+
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository($repoName);
+
+        return array(
+            'tablestats ' => $repo->getTableStats(),
+            'metadata' => $repo->getClassMetadata(),
+        );
+
+    }
+
 
 }
