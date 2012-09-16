@@ -319,6 +319,16 @@ class ArticleRepository extends EntityRepository
      *
      */
     public function getTableStats() {
+        $recordCount = $this
+            ->createQueryBuilder('a')
+            ->select('COUNT(a.id)')
+            ->getQuery()
+            ->getResult();
 
+        return array(
+          //  'definition' => $this->getDataTableDefinition(),
+            'recordCount' => $recordCount[0][1],
+          //  'metaData' => $this->getClassMetadata(),
+        );
     }
 }

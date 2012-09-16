@@ -8,7 +8,7 @@
     <h1>Admin Dashboard</h1>
 
     {% for table in tables %}
-        {% render "FourChimpsAdminBundle:Dashboard:tablestats" %}
+        {% render "FourChimpsAdminBundle:Dashboard:tablestats" with { "table" : table.name }  %}
     {% endfor %}
 
 {% endblock %}

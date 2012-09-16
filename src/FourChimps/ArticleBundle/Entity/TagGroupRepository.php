@@ -12,4 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagGroupRepository extends EntityRepository
 {
+    /**
+     *
+     */
+    public function getTableStats() {
+
+    }
 }

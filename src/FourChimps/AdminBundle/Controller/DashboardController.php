@@ -23,7 +23,7 @@ class DashboardController extends Controller
         $tables = array(
             array('name'=>'Article'),
             array('name'=>'Tag'),
-            array('name'=>'Tag Group'),
+            array('name'=>'TagGroup'),
         );
 
         return array(
@@ -35,16 +35,17 @@ class DashboardController extends Controller
      * @Route("/{$table}/tablestats", name="tablestats")
      * @Template()
      */
-    public function tableAction($table) {
+    public function tablestatsAction($table) {
 
         $repoName = "FourChimpsArticleBundle:{$table}";
 
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($repoName);
-
+$x=$repo->getTableStats();
         return array(
-            'tablestats ' => $repo->getTableStats(),
-            'metadata' => $repo->getClassMetadata(),
+            'table' => $table,
+            'tableStats' => $repo->getTableStats(),
+         //   'metadata' => $repo->getClassMetadata(),
         );
 
     }
