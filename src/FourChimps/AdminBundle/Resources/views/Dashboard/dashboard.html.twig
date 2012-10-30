@@ -1,16 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends 'FourChimpsAdminBundle::dashboard.html.twig' %}
 
-{% block sidebar %}
-{% render "FourChimpsAdminBundle:Navigation:_sidebar" %}
-{% endblock %}
-
+{# Render each section #}
 {% block body %}
     <h1>Admin Dashboard</h1>
-
     {% for table in tables %}
-        {% render "FourChimpsAdminBundle:Dashboard:tablestats" with { "table" : table.name }  %}
+        {% render "FourChimpsAdminBundle:Dashboard:tablestats" with { "table" : table.name} %}
     {% endfor %}
-
 {% endblock %}
 
-{% block admin_nav_class%} active{% endblock %}

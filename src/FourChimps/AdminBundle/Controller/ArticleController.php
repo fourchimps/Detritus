@@ -195,8 +195,7 @@ class ArticleController extends Controller
     {
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     /**
@@ -207,7 +206,8 @@ class ArticleController extends Controller
      *
      * @return Response
      */
-    public function listDataAction(Request $request) {
+    public function listDataAction(Request $request)
+    {
 
         $repository = $this->getDoctrine()->getRepository('FourChimpsArticleBundle:Article');
         $columns = $repository->getDataTableDefinition();
@@ -219,8 +219,8 @@ class ArticleController extends Controller
         /* column sorting */
         $sorts = array();
         if ($request->query->get('iSortCol_0') || $request->query->get('iSortCol_0') === '0') {
-            for ( $i=0 ; $i < intval( $request->query->get('iSortingCols') ) ; $i++ ) {
-                if ( $request->query->get('bSortable_' . intval($request->query->get('iSortCol_'.$i))) == "true" ) {
+            for ($i=0; $i < intval($request->query->get('iSortingCols')); $i++) {
+                if ($request->query->get('bSortable_' . intval($request->query->get('iSortCol_'.$i))) == "true" ) {
                     $sorts[] = (object) array(
                         'column' => $columns[$request->query->get('iSortCol_'.$i)],
                         'direction' => $request->query->get('sSortDir_'.$i)
@@ -234,7 +234,7 @@ class ArticleController extends Controller
 
         /* Individual column filtering */
         $columnFilters = array();
-        for ( $i=0 ; $i<count($columns) ; $i++ ) {
+        for ($i=0; $i<count($columns); $i++) {
             if ( $request->query->get('bSearchable_'.$i)  == "true" && $request->query->get('sSearch_'.$i) != '') {
                 $columnFilters[] = (object) array(
                     'column' => $columns[$i],
@@ -243,11 +243,19 @@ class ArticleController extends Controller
             }
         }
 
-        $list = $repository->getPagedSortedFilteredArticles($start, $length, $sorts, $columns, $globalFilter, $columnFilters);
+        $list = $repository->getPagedSortedFilteredArticles(
+            $start,
+            $length,
+            $sorts,
+            $columns,
+            $globalFilter,
+            $columnFilters
+        );
+
         $aaData = array();
         foreach ($list as $article) {
             $row = array();
-            for ( $i=0 ; $i<count($columns) ; $i++ ) {
+            for ($i=0; $i<count($columns); $i++) {
                 $expressionGenerator = $columns[$i]->getSelectBy();
                 $index = $columns[$i]->isMetaData() ? $columns[$i]->getAlias() : $i ;
                 $row[$index] = $expressionGenerator($article);

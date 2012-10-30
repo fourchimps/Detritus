@@ -82,10 +82,22 @@ class LoadArticleTestData extends AbstractFixture implements OrderedFixtureInter
                 }
             }
 
+            // Articles were written some time in the last 3 years
             $date = new \DateTime();
-            $dateInterval = new \DateInterval('PT' . rand(0, 60*60*24*365*3) . 'S');
+            $age = rand(0, 60*60*24*365*3);
+            $dateInterval = new \DateInterval("PT{$age}S");
             $date->sub($dateInterval);
             $article->setCreated($date);
+
+            // half the articles have been edited at some random time since
+            if (rand(0, 1) == 1) {
+                $updateAge = rand(0, $age);
+                $dateInterval = new \DateInterval("PT{$updateAge}S");
+                $date->add($dateInterval);
+                //$article->setUpdated($date);
+            } else {
+                $article->setUpdated($date);
+            }
 
             $manager->persist($article);
     	}

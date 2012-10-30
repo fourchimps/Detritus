@@ -26,8 +26,7 @@ class AppKernel extends Kernel
             new FourChimps\LipsumBundle\FourChimpsLipsumBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
-
-        # Detritus Bundles
+            # Detritus Bundles
             new FourChimps\UserBundle\FourChimpsUserBundle(),
             new FourChimps\ThemeBundle\FourChimpsThemeBundle(),
             new FourChimps\ArticleBundle\FourChimpsArticleBundle(),

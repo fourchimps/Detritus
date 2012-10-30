@@ -15,7 +15,7 @@ use FourChimps\AdminBundle\Controller\DataTableColumn;
  */
 class ArticleRepository extends EntityRepository
 {
-    function findPublishedMostRecent($count = 5)
+    public function findPublishedMostRecent($count = 5)
     {
         return $this
             ->createQueryBuilder('a')
@@ -26,7 +26,7 @@ class ArticleRepository extends EntityRepository
             ->getResult();
     }
 
-    function findPublishedHero()
+    public function findPublishedHero()
     {
         return $this
             ->createQueryBuilder('a')
@@ -37,7 +37,7 @@ class ArticleRepository extends EntityRepository
             ->getResult();
     }
 
-    function findPublishedSections()
+    public function findPublishedSections()
     {
         return $this
             ->createQueryBuilder('a')
@@ -48,7 +48,7 @@ class ArticleRepository extends EntityRepository
             ->getResult();
     }
 
-    function persistTagsFromJsonBuffer(Article $article)
+    public function persistTagsFromJsonBuffer(Article $article)
     {
         // turn the incoming JSON string into an array - if we cant do it then return (a proper empty array '[]' should
         // be returned if the tagsAsJsonBuffer has been set.
@@ -70,7 +70,7 @@ class ArticleRepository extends EntityRepository
 
         // For each of the new tags
         $tagCollection = new ArrayCollection();
-        foreach($tagNamesArray as $tagName) {
+        foreach ($tagNamesArray as $tagName) {
             //find the Object that backs it
             $tag = $tagRepository->findOneByTag($tagName);
 
@@ -92,7 +92,7 @@ class ArticleRepository extends EntityRepository
         }
 
         // For each of the existing tags
-        foreach($article->getTags() as $existingTag) {
+        foreach ($article->getTags() as $existingTag) {
             if ( ! $tagCollection->contains($existingTag)) {
                 $article->removeTag($existingTag);
             }
@@ -111,7 +111,7 @@ class ArticleRepository extends EntityRepository
      * @param $columnFilters
      * @return mixed
      */
-    function getPagedSortedFilteredArticles($offset, $limit, $sorts, $columns, $globalFilter, $columnFilters) {
+    public function getPagedSortedFilteredArticles($offset, $limit, $sorts, $columns, $globalFilter, $columnFilters) {
         $queryBuilder = $this->createQueryBuilder('a')
             ->addSelect('u')
             ->innerJoin('a.author', 'u')
@@ -132,7 +132,7 @@ class ArticleRepository extends EntityRepository
         return $query->getResult();
     }
 
-    function getFilteredArticlesCount($columns, $globalFilter, $columnFilters) {
+    public function getFilteredArticlesCount($columns, $globalFilter, $columnFilters) {
         $queryBuilder = $this->createQueryBuilder('a')
             ->addSelect('u')
             ->innerJoin('a.author', 'u')
@@ -318,7 +318,8 @@ class ArticleRepository extends EntityRepository
     /**
      *
      */
-    public function getTableStats() {
+    public function getTableStats()
+    {
         $recordCount = $this
             ->createQueryBuilder('a')
             ->select('COUNT(a.id)')
@@ -328,7 +329,42 @@ class ArticleRepository extends EntityRepository
         return array(
           //  'definition' => $this->getDataTableDefinition(),
             'recordCount' => $recordCount[0][1],
+            'createdLastSevenDays' => $this->getAuthoredInLastDays(7),
+            'createdLastFourteenDays' => $this->getAuthoredInLastDays(14),
+            'createdLastTwentyEightDays' => $this->getAuthoredInLastDays(28),
+            'editsLastSevenDays' => $this->getEditsInLastDays(7),
+            'editsLastFourteenDays' => $this->getEditsInLastDays(14),
+            'editsLastTwentyEightDays' => $this->getEditsInLastDays(28),
           //  'metaData' => $this->getClassMetadata(),
         );
     }
+
+    public function getAuthoredInLastDays($n)
+    {
+        $targetDate = new \DateTime();
+        $targetDate->sub(new \DateInterval("P{$n}D"));
+        $builder = $this->createQueryBuilder('a');
+        $edits = $builder
+            ->select('COUNT(a.id)')
+            ->where($builder->expr()->gt('a.created', ':dateStart'))
+            ->setParameter('dateStart', $targetDate)
+            ->getQuery()
+            ->getResult();
+        return $edits[0][1];
+    }
+
+    public function getEditsInLastDays($n)
+    {
+        $targetDate = new \DateTime();
+        $targetDate->sub(new \DateInterval("P{$n}D"));
+        $builder = $this->createQueryBuilder('a');
+        $edits = $builder
+            ->select('COUNT(a.id)')
+            ->where($builder->expr()->gt('a.updated', ':dateStart'))
+            ->setParameter('dateStart', $targetDate)
+            ->getQuery()
+            ->getResult();
+        return $edits[0][1];
+    }
+
 }

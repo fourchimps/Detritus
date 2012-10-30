@@ -19,7 +19,8 @@ class DashboardController extends Controller
      * @Route("/dashboard", name="dashboard")
      * @Template()
      */
-    public function dashboardAction() {
+    public function dashboardAction()
+    {
         $tables = array(
             array('name'=>'Article'),
             array('name'=>'Tag'),
@@ -35,20 +36,20 @@ class DashboardController extends Controller
      * @Route("/{$table}/tablestats", name="tablestats")
      * @Template()
      */
-    public function tablestatsAction($table) {
+    public function tablestatsAction($table)
+    {
 
         $repoName = "FourChimpsArticleBundle:{$table}";
 
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository($repoName);
-$x=$repo->getTableStats();
+
+
         return array(
             'table' => $table,
             'tableStats' => $repo->getTableStats(),
-         //   'metadata' => $repo->getClassMetadata(),
         );
 
     }
-
-
 }
+

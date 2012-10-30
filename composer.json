@@ -8,24 +8,25 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-bundle": "dev-master",
-        "twig/extensions": "dev-master",
-        "symfony/assetic-bundle": "dev-master",
-        "symfony/swiftmailer-bundle": "dev-master",
-        "symfony/monolog-bundle": "dev-master",
-        "sensio/distribution-bundle": "dev-master",
-        "sensio/framework-extra-bundle": "dev-master",
-        "sensio/generator-bundle": "dev-master",
+        "doctrine/doctrine-bundle": "1.0.*",
+        "twig/extensions": "1.0.*",
+        "symfony/assetic-bundle": "2.1.*",
+        "symfony/swiftmailer-bundle": "2.1.*",
+        "symfony/monolog-bundle": "2.1.*",
+        "sensio/distribution-bundle": "2.1.*",
+        "sensio/framework-extra-bundle": "2.1.*",
+        "sensio/generator-bundle": "2.1.*",
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "friendsofsymfony/user-bundle": "*",
-        "stof/doctrine-extensions-bundle": "dev-master"
+        "stof/doctrine-extensions-bundle": "dev-master",
+        "highsoft/highcharts": "2.3.2",
+        "fortawesome/fontawesome": "*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "fourchimps/lipsum-bundle": "dev-master",
-        "twitter/bootstrap": "*",
-        "fortawesome/fontawesome": "*"
+        "twitter/bootstrap": "*"
     },
     "scripts": {
         "post-install-cmd": [
@@ -70,6 +71,18 @@
                 "source": {
                     "url": "https://github.com/FortAwesome/Font-Awesome.git",
                     "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "version": "2.3.2",
+                "name": "highsoft/highcharts",
+                "dist": {
+                    "url": "http://www.highcharts.com/downloads/zips/Highcharts-2.3.2.zip",
+                    "type": "zip",
                     "reference": "master"
                 }
             }

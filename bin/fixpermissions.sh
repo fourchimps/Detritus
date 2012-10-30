@@ -1,12 +1,12 @@
 #! /bin/bash
 
 # www-data group owns everything
-chgrp -R www-data ~/source/fourchimps.com/detritus
+chgrp -R www-data ~/source/fourchimps.com/detritus/{app,bin,src,web}
 
-# owner read/write, group read/wite everything.  
-chmod -R 640 ~/source/fourchimps.com/detritus
+# owner read/write, group read/write everything.
+chmod -R 640 ~/source/fourchimps.com/detritus/{app,bin,src,web}
 # Executable directories
-chmod -R u+X,g+X ~/source/fourchimps.com/detritus
+chmod -R u+X,g+X ~/source/fourchimps.com/detritus/{app,bin,src,web}
 
 # wide open cache
 chmod -R 777 ~/source/fourchimps.com/detritus/app/logs
